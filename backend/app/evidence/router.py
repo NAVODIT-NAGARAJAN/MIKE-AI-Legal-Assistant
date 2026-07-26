@@ -1,1 +1,3 @@
-"""Evidence Router - Implementation: Phase 3, Module 3.6"""\nfrom fastapi import APIRouter\nrouter = APIRouter()
+# Evidence Router - stub, replaced in Phase 3 Module 3.6
+from fastapi import APIRouter
+router = APIRouter()
