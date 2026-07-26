@@ -1,0 +1,59 @@
+# LegalEase AI - Backend Dependencies
+# =====================================
+# Versions pinned for compatibility with Python 3.13 on Windows.
+
+# Web Framework (pinned to match chromadb requirement)
+fastapi==0.115.9
+uvicorn[standard]==0.34.3
+
+# Database - PostgreSQL
+sqlalchemy==2.0.41
+asyncpg==0.30.0
+psycopg2-binary==2.9.10
+alembic==1.16.2
+
+# Authentication
+python-jose[cryptography]==3.5.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.20
+
+# Data Validation
+pydantic==2.11.7
+pydantic[email]==2.11.7
+pydantic-settings==2.10.1
+
+# AI Framework
+langgraph==0.4.8
+langchain==0.3.26
+langchain-google-genai==2.1.5
+langchain-core==0.3.66
+langchain-community==0.3.26
+
+# Vector Database
+chromadb==1.0.12
+
+# Embeddings (local, no external API cost)
+sentence-transformers==4.1.0
+
+# PDF Processing
+pypdf2==3.0.1
+
+# PDF Generation (for consumer guidance reports)
+reportlab==4.4.2
+
+# Environment Variables
+python-dotenv==1.1.1
+
+# HTTP Client (for testing)
+httpx==0.28.1
+
+# Testing
+pytest==8.4.1
+pytest-asyncio==1.0.0
+pytest-cov==6.1.0
+
+# Logging
+loguru==0.7.3
+
+# Rate Limiting
+slowapi==0.1.9
