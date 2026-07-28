@@ -47,7 +47,7 @@ class Settings(BaseSettings):
 
     # ---- Google Gemini API ----
     gemini_api_key: str
-    gemini_model: str = "gemini-1.5-pro"
+    gemini_model: str = "gemini-2.5-flash"
     gemini_temperature: float = 0.1
 
     # ---- ChromaDB ----

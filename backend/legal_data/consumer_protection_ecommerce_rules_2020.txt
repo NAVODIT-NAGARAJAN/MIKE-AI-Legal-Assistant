@@ -1,0 +1,89 @@
+CONSUMER PROTECTION (E-COMMERCE) RULES, 2020
+Ministry of Consumer Affairs, Food and Public Distribution
+Government of India
+G.S.R. 523(E), dated 23rd July 2020
+
+In exercise of the powers conferred by sub-sections (1) and (2) of section 101 of the Consumer Protection Act, 2019 (35 of 2019), the Central Government hereby makes the following rules, namely:—
+
+CHAPTER I — PRELIMINARY
+
+Rule 1 — Short title and commencement
+(1) These rules may be called the Consumer Protection (E-Commerce) Rules, 2020.
+(2) They shall come into force on the date of their publication in the Official Gazette.
+
+Rule 2 — Definitions
+(1) In these rules, unless the context otherwise requires—
+(a) "Act" means the Consumer Protection Act, 2019;
+(b) "e-commerce entity" means any person who owns, operates or manages digital or electronic facility or platform for electronic commerce, but does not include a seller offering his goods or services for sale on a marketplace e-commerce entity;
+(c) "e-commerce" means buying or selling of goods and services including digital products over digital or electronic network;
+(d) "flash sale" means a sale organised by an e-commerce entity at significantly reduced prices, high discounts or any other such means for attracting consumers within a specified time period and specified quantities, with an intent to draw large numbers of consumers;
+(e) "inventory e-commerce entity" means an e-commerce entity which owns the inventory of goods or services and sells such goods or services directly to the consumers;
+(f) "marketplace e-commerce entity" means an e-commerce entity which provides an information technology platform on a digital or electronic network to facilitate transactions between buyers and sellers;
+(g) "seller" means a product seller as defined in clause (37) of section 2 of the Act and includes a service provider.
+
+CHAPTER II — DUTIES OF E-COMMERCE ENTITIES
+
+Rule 4 — Duties of e-commerce entities
+(1) Every e-commerce entity shall:
+(a) display its legal name, principal geographic address of its headquarters and all branches, name and details of its website, and its e-mail address and fax number, if any;
+(b) maintain a record of relevant information allowing for the identification of all sellers who have repeatedly offered goods or services that were not delivered or goods or services that did not match the description on the platform of the e-commerce entity;
+(c) acknowledge the receipt of any consumer complaint within forty-eight hours and redress the complaint within one month from the date of receipt of the complaint;
+(d) ensure that the grievance officer is available to acknowledge consumer complaint in the time prescribed herein and the officer is required to resolve the complaint within one month of receipt of complaint.
+
+(2) Every e-commerce entity shall establish an adequate grievance redressal mechanism having regard to the number of grievances ordinarily received by such entity from India, and shall appoint a grievance officer for consumer grievance redressal, and shall display the name and contact details of the grievance officer on its platform.
+
+(3) Every e-commerce entity shall ensure that the grievance officer acknowledges the receipt of any consumer complaint within forty-eight hours and redresses the complaint within one month from the date of receipt of complaint.
+
+(4) Every e-commerce entity shall, on its platform, display from time to time the information relating to—
+(a) return, refund, exchange, warranty and guarantee, delivery and shipment, costs and fees, and any other similar information which may be required by consumers to make informed decisions;
+(b) available payment methods, security of those payment methods, any fees or charges payable by users, the procedure to cancel regular payments under those methods, charge-back options, if any, and the contact information of the relevant payment service provider;
+(c) any relevant information that enables the consumer to understand the distinction between marketplace e-commerce entities and seller, if such distinction exists.
+
+Rule 5 — Duties of sellers on marketplace
+(1) No seller shall adopt any unfair trade practice whether in the course of business on an e-commerce platform or otherwise.
+
+(2) Sellers on a marketplace e-commerce entity shall:
+(a) provide accurate information relating to return, refund, exchange, warranty and guarantee, delivery and shipment, cost and fees and any other similar information which may be required by the e-commerce entity or the consumer;
+(b) ensure that the advertisements for marketing of goods or services are consistent with the actual characteristics, access and conditions of use of such goods or services;
+(c) not refuse to take back goods, or withdraw or discontinue services purchased or agreed to be purchased, or refuse to refund consideration, if paid, if such goods or services are defective, deficient or spurious, or if the goods or services are not of the characteristics or features as advertised or as agreed to;
+(d) ensure that seller information is accurate and consistent and cooperate with e-commerce entity for ensuring accuracy and consistency of such information;
+(e) provide to the e-commerce entity its legal name, principal geographic address of its headquarters and all branches, name and details of its website, its e-mail address, customer care number, GSTIN or PAN details, where applicable, and other information as may be required.
+
+Rule 6 — Additional duties of marketplace e-commerce entities
+(1) A marketplace e-commerce entity shall make reasonable efforts to maintain a record of relevant information allowing for the identification of all sellers who have repeatedly offered goods or services that were not delivered or goods or services that did not match the description on the platform.
+
+(2) A marketplace e-commerce entity shall share the details about the sellers, their ratings and other relevant details with consumers and shall provide sellers with a clear written description of any differential treatment that it gives or may give amongst similar sellers operating on it.
+
+(3) A marketplace e-commerce entity shall:
+(a) not impose cancellation charges on consumers cancelling after confirming purchase, unless the e-commerce entity itself cancels the order for reasons not attributable to the consumer;
+(b) not manipulate the price of the goods or services offered on its platform in such a manner as to gain unreasonable profit by imposing unjustified costs on the consumers and such price manipulation shall include algorithm-based pricing.
+
+Rule 7 — Additional duties of inventory e-commerce entities
+(1) An inventory e-commerce entity shall display all mandatory disclosures required under any law for the time being in force, including its address, telephone number and e-mail address.
+
+(2) Inventory e-commerce entities shall—
+(a) appoint a nodal person of contact or an alternate senior designated functionary who is resident in India, to ensure compliance with the provisions of the Act or the rules made thereunder;
+(b) ensure that the advertisements for marketing of goods or services are consistent with the actual characteristics, access and conditions of use of such goods or services;
+(c) ensure that the goods or services offered for sale have adequate and accurate information, including country of origin information;
+(d) not engage in any act of manipulating the price of the goods or services.
+
+CONSUMER COMPLAINTS AGAINST E-COMMERCE ENTITIES
+Steps to file a complaint against an e-commerce entity:
+1. First, contact the seller directly with your complaint.
+2. If unresolved, escalate to the e-commerce platform's grievance officer (must respond within 48 hours and resolve within 1 month).
+3. If still unresolved, file a complaint on the National Consumer Helpline: consumerhelpline.gov.in or call 1800-11-4000.
+4. File an online complaint through the e-Daakhil portal: edaakhil.nic.in.
+5. Approach the District Consumer Disputes Redressal Commission based on transaction value.
+
+REFUND AND RETURN RIGHTS FOR E-COMMERCE PURCHASES
+- E-commerce sellers cannot refuse to accept returns or issue refunds for defective products.
+- E-commerce entities must clearly display return and refund policies.
+- Cancellation charges cannot be imposed on consumers who cancel after order confirmation, unless the entity itself is not at fault.
+- Flash sales that use fraudulent means to mislead consumers are prohibited.
+- Manipulating prices to gain unreasonable profit from consumers is prohibited.
+
+MISLEADING ADVERTISEMENTS IN E-COMMERCE
+- E-commerce entities cannot make false or misleading advertisements.
+- Advertisements must be consistent with actual product characteristics.
+- Fake reviews and misleading product ratings are prohibited.
+- Endorsements must be genuine and from actual users.

@@ -1,0 +1,224 @@
+CONSUMER PROTECTION RULES, 2020
+Ministry of Consumer Affairs, Food and Public Distribution
+Government of India
+G.S.R. 482(E), dated 15th July 2020
+
+CHAPTER I — PRELIMINARY
+
+Rule 1 — Short title and commencement
+(1) These rules may be called the Consumer Protection Rules, 2020.
+
+Rule 2 — Definitions
+"mediator" means a person empanelled as mediator by the District Commission or the State Commission or the National Commission, as the case may be.
+"mediation cell" means a cell established under these rules by the District Commission or the State Commission or the National Commission.
+
+CHAPTER II — CONSUMER DISPUTES REDRESSAL COMMISSIONS — PROCEDURE
+
+Rule 4 — Filing of complaint
+(1) Every complaint filed before the District Commission, State Commission or the National Commission shall be in such form and in such manner as may be specified by the Commission from time to time or as is available in the e-filing facility.
+(2) A complainant may file a complaint in Form-I electronically or in person.
+(3) Every complaint shall be filed along with a fee as specified in the Schedule.
+
+FILING FEES:
+- District Commission: Claims up to Rs. 5 lakh — No fee; Rs. 5 lakh to Rs. 10 lakh — Rs. 200; Rs. 10 lakh to Rs. 20 lakh — Rs. 400; Rs. 20 lakh to Rs. 50 lakh — Rs. 1,000; Rs. 50 lakh to Rs. 1 crore — Rs. 2,000.
+- State Commission: Claims above Rs. 1 crore — Rs. 2,500 to Rs. 4,000 depending on amount.
+- National Commission: Claims above Rs. 10 crore — Rs. 5,000.
+
+Rule 5 — Limitation period
+A consumer complaint shall be filed within two years from the date on which the cause of action has arisen. The Commission may condone the delay if sufficient cause is shown.
+
+Rule 6 — Procedure on admission
+(1) On admission of a complaint, the District Commission shall send a copy of the complaint to the opposite party within 21 days and direct the opposite party to give its version within 30 days.
+(2) The opposite party may seek an extension of time not exceeding 15 days to file its response.
+
+Rule 7 — Mediation
+(1) At the first hearing, if both parties agree, the Commission shall refer the dispute to mediation.
+(2) The Mediation Cell shall endeavour to facilitate settlement within three months.
+(3) If mediation fails, the case shall be returned to the Commission for adjudication.
+
+CHAPTER III — CENTRAL CONSUMER PROTECTION AUTHORITY — PROCEDURES
+
+Rule 10 — Complaint to Central Authority
+Any consumer or any recognized consumer association may file a complaint to the Central Consumer Protection Authority (CCPA) regarding:
+(a) violation of consumer rights
+(b) unfair trade practices
+(c) misleading advertisements
+
+CHAPTER IV — MEDIATION
+
+Rule 22 — Mediation process
+(1) Mediation shall be voluntary and confidential.
+(2) The mediator shall be neutral and impartial.
+(3) Mediation proceedings shall be completed within three months.
+(4) A settlement reached through mediation shall be recorded and forwarded to the Commission for passing an order.
+(5) If no settlement is reached, the parties shall inform the Commission within seven days.
+
+CONSUMER GRIEVANCE REDRESSAL — PRACTICAL GUIDE
+
+STEP 1 — NOTICE TO THE SELLER/SERVICE PROVIDER
+Before filing a consumer complaint, always send a written notice (legal notice) to the opposite party stating:
+- Details of the defect or deficiency
+- The amount of compensation sought
+- A time period (usually 30-60 days) to respond and resolve
+
+STEP 2 — DOCUMENT COLLECTION
+Gather all relevant evidence:
+- Original purchase invoice or bill
+- Warranty card or guarantee certificate
+- All correspondence with seller (emails, chats, letters)
+- Photographs or videos of the defective product
+- Medical reports if injury occurred
+- Expert reports if technical defect
+- Bank statements showing payment
+- Delivery receipts and tracking information
+- Screenshots of product listing, advertisements, or misleading claims
+
+STEP 3 — IDENTIFY THE RIGHT FORUM
+- District Commission: Claims up to Rs. 1 crore
+- State Commission: Claims Rs. 1 crore to Rs. 10 crore
+- National Commission: Claims above Rs. 10 crore
+
+STEP 4 — FILE THE COMPLAINT
+Option A — Online: Use e-Daakhil portal at edaakhil.nic.in
+Option B — Physical: File in person at the relevant Commission
+Option C — National Consumer Helpline: Call 1800-11-4000 or 14404, or visit consumerhelpline.gov.in
+
+STEP 5 — ATTEND HEARINGS
+The Commission will issue notices. Attend all hearings or hearings can proceed ex-parte.
+
+TYPES OF RELIEFS AVAILABLE
+
+Under Section 39 of the Consumer Protection Act, 2019, consumers can seek:
+1. REPLACEMENT: Replacement of defective goods with new goods free from defect.
+2. REFUND: Full refund of price paid along with interest.
+3. REPAIR: Removal of defect from goods.
+4. COMPENSATION: Monetary compensation for loss or injury suffered.
+5. PUNITIVE DAMAGES: In cases of gross negligence or willful disregard.
+6. DISCONTINUATION: Order to stop unfair trade practice.
+7. WITHDRAWAL: Removal of hazardous goods from market.
+8. COST OF LITIGATION: Recovery of court fees and expenses.
+
+IMPORTANT DEFINITIONS FOR CONSUMER COMPLAINT FILING
+
+DEFECTIVE PRODUCT: A product that has any fault, imperfection or shortcoming in quality, quantity, potency, purity or standard required by law, contract, or as claimed by the seller.
+
+SERVICE DEFICIENCY: Any fault, imperfection, shortcoming or inadequacy in quality, nature and manner of performance required by law or undertaken by contract, including negligence or omission.
+
+WHO IS A CONSUMER?
+- Person who buys goods for personal use (not for resale or commercial purpose)
+- Person who hires services for personal use
+- Legal heirs of deceased consumers
+- Minor consumers through parents or guardians
+
+COMPLAINT AGAINST WHOM?
+- Manufacturers of defective products
+- Sellers of defective products
+- Service providers with deficient services
+- E-commerce companies
+- Insurance companies
+- Banks and financial institutions
+- Healthcare providers
+- Educational institutions
+- Builders and real estate developers (for housing issues)
+- Electricity, water, telecom utility companies
+
+LIMITATION PERIOD:
+Consumer complaints must be filed within 2 years from the date on which the cause of action arose. Courts may condone delay with sufficient cause.
+
+EVIDENCE CHECKLIST FOR COMMON ISSUES:
+
+FOR DEFECTIVE PRODUCT:
+- Purchase invoice
+- Product photographs showing defect
+- Warranty card
+- Correspondence with manufacturer/seller
+- Expert opinion or lab test report (if needed)
+
+FOR REFUND ISSUE:
+- Payment proof (receipt, bank statement)
+- Refund request emails/messages
+- Seller's response or silence record
+- Timeline documentation
+
+FOR WARRANTY CLAIM:
+- Original warranty card
+- Service center visit records
+- Written denial of warranty claim
+- Original purchase bill showing purchase date
+
+FOR BILLING DISPUTE:
+- Original bill or statement
+- Payment proof
+- Incorrect charge evidence
+- Communication with service provider
+
+FOR DELIVERY PROBLEM:
+- Order confirmation
+- Expected delivery date
+- Tracking history
+- Non-delivery evidence
+- Communication with seller/courier
+
+FOR SERVICE DEFICIENCY:
+- Service contract or agreement
+- Evidence of poor service quality
+- Communication records
+- Any expert assessments
+
+FOR MISLEADING ADVERTISEMENT:
+- Screenshot or copy of advertisement
+- Proof that product differs from advertisement
+- Purchase invoice showing reliance on advertisement
+
+CONSUMER RIGHTS QUICK REFERENCE:
+
+RIGHT TO SAFETY
+You have the right to be protected against goods and services that are hazardous to life and property. If a product causes injury due to manufacturing defect, you can claim compensation.
+
+RIGHT TO INFORMATION  
+You have the right to know full details about product quality, quantity, price, and standard before purchase. Hidden charges, undisclosed terms, and misleading labels are violations.
+
+RIGHT TO CHOICE
+You have the right to access variety of goods and services at competitive prices. Anti-competitive practices that restrict your choices are prohibited.
+
+RIGHT TO BE HEARD
+Your complaints must be acknowledged within 48 hours by e-commerce companies. Companies must have grievance redressal mechanisms.
+
+RIGHT TO REDRESSAL
+You can seek compensation for defective goods, deficient services, unfair trade practices, and misleading advertisements through consumer courts without needing a lawyer.
+
+RIGHT TO CONSUMER EDUCATION
+You have the right to access information about your consumer rights and how to exercise them effectively.
+
+NATIONAL CONSUMER HELPLINE — CONTACT INFORMATION
+Toll-Free: 1800-11-4000 (Monday to Friday, 9:30 AM to 5:30 PM)
+NCH Number: 14404
+Website: consumerhelpline.gov.in
+Online Complaint: edaakhil.nic.in (e-Daakhil portal)
+Department of Consumer Affairs: consumeraffairs.nic.in
+
+COMMON CONSUMER ISSUES AND SOLUTIONS:
+
+ISSUE: Received defective/damaged product online
+SOLUTION: Immediately photograph the damage. Contact seller within return window. If refused, file complaint on consumer helpline. District Commission can order replacement, refund, or compensation.
+
+ISSUE: Seller refusing refund for valid return
+SOLUTION: Document all communications. Send formal written complaint. If unresolved, approach consumer forum. E-commerce sellers are legally required to accept returns for defective goods.
+
+ISSUE: Expired product sold
+SOLUTION: Preserve the product as evidence. Take photograph of expiry date. File complaint with food safety authority and consumer forum. Seller and manufacturer both liable.
+
+ISSUE: Service not delivered as promised
+SOLUTION: Gather proof of service agreement. Document non-performance. Send legal notice. Approach consumer forum for refund plus compensation for mental harassment.
+
+ISSUE: Hidden charges or excess billing
+SOLUTION: Request itemized bill. Compare with advertised price. Document discrepancy. File complaint with service provider's regulator (TRAI, IRDA, etc.) and consumer forum.
+
+ISSUE: Warranty claim rejected without valid reason
+SOLUTION: Obtain written rejection with reason. Get independent expert opinion on defect cause. File consumer complaint — burden of proof shifts to manufacturer after expert report.
+
+ISSUE: Builder not delivering possession on time
+SOLUTION: Check agreement for promised possession date. Calculate delay compensation as per RERA and consumer law. Can approach both RERA authority and consumer forum.
+
+ISSUE: Insurance claim wrongly rejected
+SOLUTION: Request written rejection with specific policy clause cited. Get second opinion. File complaint with IRDA Grievance Cell. Approach consumer forum if unresolved.

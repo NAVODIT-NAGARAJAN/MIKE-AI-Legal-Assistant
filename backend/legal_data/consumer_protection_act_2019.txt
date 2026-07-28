@@ -1,0 +1,222 @@
+CONSUMER PROTECTION ACT, 2019
+Act No. 35 of 2019
+Ministry of Consumer Affairs, Food and Public Distribution
+Government of India
+
+An Act to provide for protection of the interests of consumers and for the said purpose, to establish authorities for timely and effective administration and settlement of consumers' disputes and for matters connected therewith or incidental thereto.
+
+BE it enacted by Parliament in the Seventieth Year of the Republic of India as follows:
+
+CHAPTER I — PRELIMINARY
+
+Section 1 — Short title, extent and commencement
+(1) This Act may be called the Consumer Protection Act, 2019.
+(2) It extends to the whole of India except the State of Jammu and Kashmir.
+(3) It shall come into force on such date as the Central Government may, by notification, appoint.
+
+Section 2 — Definitions
+In this Act, unless the context otherwise requires:
+
+(1) "advertisement" means any audio or visual publicity, representation, endorsement or pronouncement made by means of light, sound, smoke, gas, print, electronic media, internet or website and includes any notice, circular, label, wrapper, invoice or such other documents.
+
+(2) "consumer" means any person who—
+(i) buys any goods for a consideration which has been paid or promised or partly paid and partly promised, or under any system of deferred payment and includes any user of such goods other than the person who buys such goods for consideration paid or promised, when such use is made with the approval of such person, but does not include a person who obtains such goods for resale or for any commercial purpose; or
+(ii) hires or avails of any service for a consideration which has been paid or promised or partly paid and partly promised, or under any system of deferred payment and includes any beneficiary of such service other than the person who hires or avails of the services for consideration paid or promised, when such services are availed of with the approval of the first-mentioned person, but does not include a person who avails of such service for any commercial purpose.
+Explanation: For the purposes of this clause, "commercial purpose" does not include use by a person of goods bought and used by him exclusively for the purpose of earning his livelihood by means of self-employment.
+
+(3) "consumer dispute" means a dispute where the person against whom a complaint has been made, denies or disputes the allegations contained in the complaint.
+
+(4) "complainant" means—
+(i) a consumer; or
+(ii) any voluntary consumer association registered under any law for the time being in force; or
+(iii) the Central Government or any State Government; or
+(iv) the Central Authority; or
+(v) one or more consumers, where there are numerous consumers having the same interest; or
+(vi) in case of death of a consumer, his legal heir or legal representative; or
+(vii) in case of a consumer being a minor, his parent or legal guardian.
+
+(5) "defect" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied, or as is claimed by the trader in any manner whatsoever in relation to any goods or product and the expression "defective" shall be construed accordingly.
+
+(6) "deficiency" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes—
+(i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and
+(ii) deliberate withholding of relevant information by such person to the consumer.
+
+(7) "e-commerce" means buying or selling of goods or services including digital products over digital or electronic network.
+
+(8) "electronic service provider" means a person who provides technologies or processes to enable a seller or buyer to perform e-commerce transactions.
+
+(9) "establishment" includes any shop, premises, stall or place where goods or services are offered for sale or provided.
+
+(10) "goods" means every kind of movable property and includes food, as defined in the Food Safety and Standards Act, 2006.
+
+(11) "misleading advertisement" in relation to any product or service, means an advertisement, which—
+(i) falsely describes such product or service; or
+(ii) gives a false guarantee to, or is likely to mislead the consumers as to the nature, substance, quantity or quality of such product or service; or
+(iii) conveys an express or implied representation which, if made by the manufacturer or seller or service provider thereof, would constitute an unfair trade practice; or
+(iv) deliberately conceals important information.
+
+(12) "product" means any article or good or substance or raw material or any extended cycle of such product, which may be in gaseous, liquid, or solid state possessing intrinsic value which is capable of delivery either as assembled or produced and is used or consumed or availed of by a consumer.
+
+(13) "product liability" means the responsibility of a product manufacturer or product seller, of any product or service, to compensate for any harm caused to a consumer by such defective product manufactured or sold or by deficiency in services relating thereto.
+
+(14) "product manufacturer" means a person who—
+(i) makes any product or parts thereof; or
+(ii) assembles parts thereof made by others; or
+(iii) puts or causes to be put his own mark on any products made by any other person; or
+(iv) makes a product and sells, distributes, leases, instals, prepares, packages, labels, markets, repairs, maintains such product or is otherwise involved in placing such product for commercial purpose; or
+(v) designs, produces, fabricates, constructs or re-manufactures any product before its sale; or
+(vi) being a product seller of a product, is also a manufacturer of such product.
+
+(15) "product seller" means a person who, in the course of business, imports, sells, distributes, leases, installs, prepares, packages, labels, markets, repairs, maintains, or otherwise is involved in placing such product for commercial purpose and includes—
+(i) a manufacturer who is also a product seller of such product; or
+(ii) a service provider, but does not include—
+(a) a seller of immovable property, unless such person is engaged in the sale of constructed house or in the construction of homes or flats; or
+(b) a provider of professional services in any transaction in which, the sale or use of a product is only incidental thereto, but the essence of the transaction is the furnishing of judgment, skill or services; or
+(c) a person who acts only in a financial capacity with respect to the sale of the product, including but not limited to a finance company.
+
+(16) "service" means service of any description which is made available to potential users and includes, but not limited to, the provision of facilities in connection with banking, financing, insurance, transport, processing, supply of electrical or other energy, telecom, boarding or lodging or both, housing construction, entertainment, amusement or the purveying of news or other information, but does not include the rendering of any service free of charge or under a contract of personal service.
+
+(17) "unfair contract" means a contract between a manufacturer or trader or service provider on one hand, and a consumer on the other, having such terms which cause significant change in the rights of such consumer, including the following, namely:—
+(i) requiring manifestly excessive security deposits to be given by a consumer for the performance of contractual obligations; or
+(ii) imposing any penalty on the consumer, for the breach of contract thereof, which is wholly disproportionate to the loss occurred due to such breach to the other party to the contract; or
+(iii) refusing to accept early repayment of debts on payment of applicable penalty; or
+(iv) entitling a party to the contract to terminate such contract unilaterally, without reasonable cause; or
+(v) permitting or has the effect of permitting one party to assign the contract to the detriment of the other party who is a consumer, without his consent; or
+(vi) imposing on the consumer any unreasonable charge, obligation or condition which puts such consumer to disadvantage.
+
+(18) "unfair trade practice" means a trade practice which, for the purpose of promoting the sale, use or supply of any goods or for the provision of any service, adopts any unfair method or unfair or deceptive practice including any of the following practices, namely:—
+(i) making any statement, whether orally or in writing or by visible representation including by means of electronic record, which—
+(a) falsely represents that the goods are of a particular standard, quality, quantity, grade, composition, style or model; or
+(b) falsely represents that the services are of a particular standard, quality or grade; or
+(c) falsely represents any re-built, second-hand, renovated, reconditioned or old goods as new goods; or
+(d) represents that the goods or services have sponsorship, approval, performance, characteristics, accessories, uses or benefits which such goods or services do not have; or
+(e) represents that the seller or the supplier has a sponsorship or approval or affiliation which such seller or supplier does not have; or
+(f) makes a false or misleading representation concerning the need for, or the usefulness of, any goods or services; or
+(g) gives to the public any warranty or guarantee of the performance, efficacy or length of life of a product or of any goods that is not based on an adequate or proper test thereof; or
+(h) makes to the public a representation in a form that purports to be a warranty or guarantee of a product or of any goods or services; or
+(i) conducts any contest, lottery, game of chance or skill, for the purpose of promoting, directly or indirectly, the sale, use or supply of any product or any business interest, except such contest, lottery, game of chance or skill as may be prescribed; or
+(j) withholds from the participants of any scheme offering gifts, prizes or other items free of charge on its purchase, the information about the scheme including information about any condition thereof and its actual working; or
+(k) permits the publication of any advertisement whether in any newspaper or otherwise, for the sale or supply at a bargain price of goods or services that are not intended to be offered for sale or supply at the bargain price, or for a period that is, and in quantities that are, reasonable, having regard to the nature of the market in which the business is carried on, the nature and size of business, and the nature of the advertisement; or
+(l) permits the offering of gifts, prizes or other items with the intention of not providing them as offered or creating impression that something is being given or offered free of charge when it is fully or partly covered by the amount charged in the transaction as a whole; or
+(m) conduct of sale or supply of goods or provision of services in a manner that may cause harm to the environment or is hazardous to health; or
+(n) using misleading or deceptive methods to obtain personal information of any consumer; or
+(o) failing to issue a bill or cash memo or receipt for the goods sold or services rendered in such manner as may be prescribed.
+
+CHAPTER II — CENTRAL CONSUMER PROTECTION AUTHORITY
+
+Section 10 — Establishment of Central Consumer Protection Authority
+(1) The Central Government shall, by notification, establish with effect from such date as it may specify in such notification, an authority to be known as the Central Consumer Protection Authority to regulate matters relating to violation of rights of consumers, unfair trade practices and misleading advertisements which are prejudicial to the interests of public and consumers and to promote, protect and enforce the rights of consumers as a class.
+
+Section 18 — Powers and functions of Central Authority
+The Central Authority shall—
+(a) protect, promote and enforce the rights of consumers as a class, and prevent violation of consumers' rights under this Act;
+(b) prevent unfair trade practices and ensure that no person engages himself in unfair trade practices;
+(c) ensure that no false or misleading advertisement is made of any goods or services which contravenes the provisions of this Act or the rules made thereunder;
+(d) ensure that no person takes part in the publication of any advertisement which is false or misleading.
+
+Section 19 — Rights of consumers
+Every consumer shall have the right—
+(a) to be protected against the marketing of goods, products or services which are hazardous to life and property;
+(b) to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices;
+(c) to be assured, wherever possible, access to a variety of goods, products or services at competitive prices;
+(d) to be heard and to be assured that consumer's interests will receive due consideration at appropriate forums;
+(e) to seek redressal against unfair trade practices, unfair contracts or restrictive trade practices or unscrupulous exploitation of consumers; and
+(f) to consumer awareness.
+
+CHAPTER III — CONSUMER DISPUTES REDRESSAL COMMISSIONS
+
+Section 28 — District Consumer Disputes Redressal Commission
+(1) The State Government shall, by notification, establish a District Consumer Disputes Redressal Commission, to be known as the District Commission, in each district of the State.
+(2) The District Commission shall consist of—
+(a) a President; and
+(b) not less than two and not more than such number of members as may be prescribed, in consultation with the Central Government.
+
+Section 34 — Jurisdiction of District Commission
+(1) Subject to the other provisions of this Act, the District Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration does not exceed one crore rupees.
+(2) A complaint shall be instituted in a District Commission within the local limits of whose jurisdiction—
+(a) the opposite party or each of the opposite parties, where there are more than one, at the time of the institution of the complaint, ordinarily resides or carries on business or has a branch office or personally works for gain; or
+(b) any of the opposite parties, where there are more than one, at the time of the institution of the complaint, actually and voluntarily resides, or carries on business or has a branch office, or personally works for gain, provided that in such case either the permission of the District Commission is given, or the opposite parties who do not reside, or carry on business or have a branch office, or personally work for gain, as the case may be, acquiesce in such institution; or
+(c) the cause of action, wholly or in part, arises; or
+(d) the complainant resides or personally works for gain.
+
+Section 47 — State Consumer Disputes Redressal Commission
+(1) The State Government shall, by notification, establish a State Consumer Disputes Redressal Commission, to be known as the State Commission, in the State.
+Jurisdiction: The State Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration exceeds one crore rupees but does not exceed ten crore rupees.
+
+Section 58 — National Consumer Disputes Redressal Commission
+(1) The Central Government shall, by notification, establish a National Consumer Disputes Redressal Commission, to be known as the National Commission.
+Jurisdiction: The National Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration exceeds ten crore rupees.
+
+CHAPTER IV — COMPLAINT FILING PROCEDURE
+
+Section 35 — Manner of filing complaint
+(1) A complaint, in relation to any goods sold or delivered or agreed to be sold or delivered or any service provided or agreed to be provided, may be filed with a District Commission by—
+(a) the consumer, to whom such goods are sold or delivered or agreed to be sold or delivered or such service is provided or agreed to be provided, against—
+(i) the trader or manufacturer or seller who sold or delivered or agreed to sell or deliver such goods or who provided or agreed to provide such service; or
+(ii) the electronic service provider, against whom such complaint is made; or
+(b) the complainant.
+
+Section 38 — Procedure for hearing complaint
+(1) The District Commission shall, on admission of a complaint, issue a copy of the complaint to the opposite party free of charge and direct him to give his version of the case within a period of thirty days or such extended period, not exceeding fifteen days, as may be granted by the District Commission.
+(3) The District Commission shall endeavour to decide the complaint within a period of three months from the date of receipt of notice by the opposite party where the complaint does not require analysis or testing of commodities and within five months if it requires analysis or testing of commodities.
+
+Section 39 — Finding of District Commission
+(1) If, after the proceedings conducted under section 38, the District Commission is satisfied that the goods complained against suffer from any of the defects specified in the complaint or that any of the allegations contained in the complaint about the services are proved, it shall issue an order to the opposite party directing him to do one or more of the following things, namely:—
+(a) to remove the defect pointed out by the appropriate laboratory from the goods in question;
+(b) to replace the goods with new goods of similar description which shall be free from any defect;
+(c) to return to the complainant the price, or, as the case may be, the charges paid by the complainant, along with such interest on such price or charges as may be decided;
+(d) to pay such amount as may be awarded by it as compensation to the consumer for any loss or injury suffered by the consumer due to the negligence of the opposite party: Provided that the District Commission shall have the power to grant punitive damages in such circumstances as it deems fit;
+(e) to discontinue the unfair trade practice or restrictive trade practice or not to repeat them;
+(f) not to offer the hazardous or unsafe goods for sale;
+(g) to withdraw the hazardous goods from being offered for sale;
+(h) to cease manufacture of hazardous goods and to desist from offering services which are hazardous in nature;
+(i) to pay such sum as may be determined by it if it is of the opinion that loss or injury has been suffered by a large number of consumers who are not identifiable conveniently.
+
+CHAPTER V — PRODUCT LIABILITY
+
+Section 82 — Product liability action
+A product liability action may be brought by a complainant against a product manufacturer or a product service provider or a product seller, as the case may be, for any harm caused to him on account of a defective product.
+
+Section 83 — Liability of product manufacturer
+A product manufacturer shall be liable in a product liability action, if—
+(a) the product contains a manufacturing defect; or
+(b) the product is defective in design; or
+(c) there is a deficiency in the instructions required to be provided for correct use of the product; or
+(d) the product does not conform to the express warranty; or
+(e) the product fails to contain adequate instructions of correct usage to prevent any harm or any warning regarding improper or incorrect usage.
+
+Section 84 — Liability of product service provider
+A product service provider shall be liable in a product liability action, if—
+(a) the service provided by him was faulty or imperfect or deficient or inadequate in quality, nature or manner of performance which is required to be provided under any law for the time being in force or pursuant to any contract or otherwise; or
+(b) there was an act of omission or commission or negligence or conscious withholding of any information which caused harm to the consumer; or
+(c) the service provider did not issue adequate instructions or warnings to prevent any harm; or
+(d) the service did not conform to express warranty or the terms and conditions of the contract.
+
+Section 85 — Liability of product seller
+A product seller who is not a product manufacturer shall be liable in a product liability action, if—
+(a) he has exercised substantial control over the designing, testing, manufacturing, packaging or labelling of a product that caused harm; or
+(b) he has altered or modified the product and such alteration or modification was the substantial factor in causing the harm; or
+(c) he has made an express warranty of a product independent of any express warranty made by a manufacturer and the product failed to conform to such express warranty made by the product seller; or
+(d) the product has been sold by him and the identity of product manufacturer of such product is not known, or if known, the service of notice or process or warrant cannot be effected on him or he is not subject to the law which is in force in India or the order, if any, passed against him cannot be enforced, in which case the product seller shall be deemed to be the product manufacturer and shall be liable for product liability action.
+
+CHAPTER VI — MEDIATION
+
+Section 74 — Mediation
+(1) At any stage of the hearing of a complaint, the parties to the complaint may opt for mediation to settle the dispute.
+(2) The District Commission may, with the consent of parties to the complaint, refer the dispute to mediation.
+(3) Where a settlement has been arrived at through mediation, it shall be referred to the District Commission and the District Commission shall pass an order recording such settlement.
+
+NATIONAL CONSUMER HELPLINE
+Toll-Free Number: 1800-11-4000 (National Consumer Helpline)
+NCH Number: 14404
+Online Complaint Portal: consumerhelpline.gov.in
+e-Daakhil Portal: edaakhil.nic.in (for filing online complaints)
+
+CONSUMER RIGHTS SUMMARY
+The six fundamental consumer rights under this Act are:
+1. Right to Safety: Protection against goods and services hazardous to life and property.
+2. Right to Information: Right to be informed about quality, quantity, price, and standards.
+3. Right to Choice: Assured access to variety of goods and services at competitive prices.
+4. Right to be Heard: Consumer interests will receive due consideration at appropriate forums.
+5. Right to Redressal: Seek redressal against unfair trade practices and unscrupulous exploitation.
+6. Right to Consumer Education: Right to acquire knowledge and skill to be an informed consumer.
