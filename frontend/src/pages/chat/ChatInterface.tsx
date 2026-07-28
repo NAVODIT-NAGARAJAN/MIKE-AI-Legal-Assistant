@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  useParams,
-  useNavigate,
-  Link,
-  useSearchParams,
-} from "react-router-dom";
+import { useParams, useNavigate, Link, useSearchParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Send, Bot, User, Loader2, Plus, MessageSquare, Menu, Scale } from "lucide-react";
+import {
+  Send, Bot, User, Loader2, Plus, MessageSquare, Menu,
+  Scale, ArrowRight,
+} from "lucide-react";
 import { toast } from "react-toastify";
-import { Button } from "../../components/ui/Button";
+
 import { useAuth } from "../../context/AuthContext";
 import {
   aiApi as apiService,
@@ -19,30 +17,35 @@ import {
 } from "../../api/ai";
 import { motion, AnimatePresence } from "framer-motion";
 
+const SUGGESTED_PROMPTS = [
+  "I received a defective product. What are my rights?",
+  "The seller is refusing to issue a refund.",
+  "I was charged incorrectly on my bill.",
+  "My online order never arrived.",
+];
+
 export const ChatInterface: React.FC = () => {
   const { conversationId } = useParams<{ conversationId?: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
   const caseId = searchParams.get("caseId");
   const { user } = useAuth();
-  
+
   const [messages, setMessages] = useState<Msg[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
-  // Sidebar state
   const [recentChats, setRecentChats] = useState<ConversationListItem[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  
+
   const loadRecentChats = async () => {
     try {
       const chats = await apiService.listConversations();
@@ -54,26 +57,18 @@ export const ChatInterface: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
-
-  // Load history for sidebar
-  useEffect(() => {
-    loadRecentChats();
-  }, []);
+  useEffect(() => { scrollToBottom(); }, [messages, isTyping]);
+  useEffect(() => { loadRecentChats(); }, []);
 
   useEffect(() => {
     if (conversationId) {
       loadConversation(conversationId);
     } else {
-      setMessages([
-        {
-          role: "ai",
-          content: "Hello! I am LegalEase AI, your consumer rights assistant. Please describe your consumer issue in detail so I can analyze it and guide you on your rights.",
-          timestamp: new Date().toISOString(),
-        }
-      ]);
+      setMessages([{
+        role: "ai",
+        content: "Hello! I am **MIKE**, your AI consumer rights assistant. Please describe your consumer issue in detail so I can analyze your rights and guide you to resolution.",
+        timestamp: new Date().toISOString(),
+      }]);
     }
   }, [conversationId]);
 
@@ -90,193 +85,213 @@ export const ChatInterface: React.FC = () => {
     }
   };
 
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputMessage.trim()) return;
+  const handleSendMessage = async (e: React.FormEvent | string) => {
+    if (typeof e !== "string") e.preventDefault();
+    const content = typeof e === "string" ? e : inputMessage;
+    if (!content.trim()) return;
 
-    const userMsg: Msg = {
-      role: "user",
-      content: inputMessage,
-      timestamp: new Date().toISOString()
-    };
-    
-    setMessages(prev => [...prev, userMsg]);
+    const userMsg: Msg = { role: "user", content, timestamp: new Date().toISOString() };
+    setMessages((prev) => [...prev, userMsg]);
     setInputMessage("");
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "56px";
+    }
     setIsTyping(true);
 
     try {
       let replyData: AgentReply;
-      
       if (conversationId) {
         replyData = await apiService.sendMessage(conversationId, userMsg.content);
       } else {
-        replyData = await apiService.startConversation(
-          userMsg.content,
-          caseId ?? undefined
-        );
-
+        replyData = await apiService.startConversation(userMsg.content, caseId ?? undefined);
         await loadRecentChats();
-
-        navigate(`/chat/${replyData.conversation_id}`, {
-          replace: true,
-        });
+        navigate(`/chat/${replyData.conversation_id}`, { replace: true });
       }
-
-      const aiMsg: Msg = {
-        role: "ai",
-        content: replyData.reply,
-        timestamp: new Date().toISOString()
-      };
-      
-      setMessages(prev => [...prev, aiMsg]);
-      
+      const aiMsg: Msg = { role: "ai", content: replyData.reply, timestamp: new Date().toISOString() };
+      setMessages((prev) => [...prev, aiMsg]);
       if (replyData.is_complete) {
-        toast.info("Consultation completed. The report is being generated.");
+        toast.info("Consultation completed. Your resolution roadmap is being generated.");
       }
     } catch (err: any) {
       let errorMsg = "Failed to communicate with AI Agent.";
-      if (err.response?.data) {
-        if (err.response.data.message) {
-          errorMsg = err.response.data.message;
-        }
-        if (Array.isArray(err.response.data.errors) && err.response.data.errors.length > 0) {
-          // Append the first specific field error if available
-          errorMsg += ` (${err.response.data.errors[0].message})`;
-        }
+      if (err.response?.data?.message) errorMsg = err.response.data.message;
+      if (Array.isArray(err.response?.data?.errors) && err.response.data.errors.length > 0) {
+        errorMsg += ` (${err.response.data.errors[0].message})`;
       }
       toast.error(errorMsg);
-      setMessages(prev => prev.slice(0, -1));
+      setMessages((prev) => prev.slice(0, -1));
     } finally {
       setIsTyping(false);
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage(e as unknown as React.FormEvent);
     }
   };
 
+  const isNewChat = !conversationId && messages.length <= 1;
+
   return (
-    <div className="flex h-[calc(100dvh-6rem)] md:h-[calc(100dvh-4rem)] bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden relative">
-      
+    <div className="flex h-[calc(100dvh-6rem)] md:h-[calc(100dvh-4rem)] bg-[#1A1A1A] border border-[#2A2A2A] rounded-2xl overflow-hidden relative shadow-xl">
+
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
         {isSidebarOpen && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20 z-40 md:hidden"
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
       </AnimatePresence>
 
-      {/* Sidebar */}
-      <motion.div 
-        className={`w-72 bg-gray-50 border-r border-gray-200 flex flex-col absolute inset-y-0 left-0 z-50 transform md:relative md:translate-x-0 transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      {/* Chat Sidebar */}
+      <motion.div
+        className={`w-72 bg-[#0A0A0A] border-r border-[#2A2A2A] flex flex-col absolute inset-y-0 left-0 z-50 transform md:relative md:translate-x-0 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="p-4 border-b border-gray-200 bg-white">
-          <Button onClick={() => { navigate("/chat"); setIsSidebarOpen(false); }} className="w-full flex items-center justify-center shadow-sm">
-            <Plus className="mr-2 h-4 w-4" /> New Chat
-          </Button>
+        <div className="p-4 border-b border-[#2A2A2A]">
+          <button
+            onClick={() => { navigate("/chat"); setIsSidebarOpen(false); }}
+            className="w-full h-10 flex items-center justify-center gap-2 bg-[#D4AF37] hover:bg-[#F4C542] text-black text-sm font-semibold rounded-xl transition-all duration-200 shadow-md shadow-[#D4AF37]/20"
+          >
+            <Plus className="h-4 w-4" />
+            New Chat
+          </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-4 space-y-2">
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-2">
-            Recent Chats
-          </h3>
+
+        <div className="flex-1 overflow-y-auto p-3">
+          <p className="text-xs font-bold text-[#B3B3B3] uppercase tracking-widest mb-3 px-2">
+            Recent
+          </p>
           {isLoadingHistory ? (
-            <div className="text-center py-4 text-sm text-gray-400">Loading history...</div>
+            <div className="space-y-2 px-2">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="skeleton h-10 rounded-xl" />
+              ))}
+            </div>
           ) : recentChats.length === 0 ? (
-            <div className="text-center py-4 text-sm text-gray-400">
-                No recent chats
+            <div className="px-2 py-8 text-center">
+              <MessageSquare className="h-8 w-8 text-[#2A2A2A] mx-auto mb-2" />
+              <p className="text-xs text-[#B3B3B3]">No conversations yet</p>
             </div>
           ) : (
-            recentChats.map(chat => (
-              <Link
-                key={chat.id}
-                to={`/chat/${chat.id}`}
-                onClick={() => setIsSidebarOpen(false)}
-                className={`flex items-start space-x-2 p-2.5 rounded-xl transition-colors duration-200 ${conversationId === chat.id ? 'bg-blue-100 text-blue-900' : 'hover:bg-gray-200 text-gray-700'}`}
-              >
-                <MessageSquare className={`h-4 w-4 mt-0.5 ${conversationId === chat.id ? 'text-blue-600' : 'text-gray-400'}`} />
-                <div className="text-sm font-medium truncate">
-                  {chat.title}
-                </div>
-              </Link>
-            ))
+            <div className="space-y-1">
+              {recentChats.map((chat) => (
+                <Link
+                  key={chat.id}
+                  to={`/chat/${chat.id}`}
+                  onClick={() => setIsSidebarOpen(false)}
+                  className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm transition-all duration-200 ${
+                    conversationId === chat.id
+                      ? "bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20"
+                      : "text-[#B3B3B3] hover:bg-[#1A1A1A] hover:text-white"
+                  }`}
+                >
+                  <MessageSquare className={`h-3.5 w-3.5 flex-shrink-0 ${conversationId === chat.id ? "text-[#D4AF37]" : "text-[#B3B3B3]"}`} />
+                  <span className="truncate font-medium">{chat.title}</span>
+                </Link>
+              ))}
+            </div>
           )}
         </div>
       </motion.div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col relative w-full">
+      <div className="flex-1 flex flex-col relative w-full min-w-0">
         {/* Header */}
-        <div className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
-          <div className="flex items-center space-x-3">
-            <button 
-              className="md:hidden p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
+        <div className="bg-[#1A1A1A]/90 backdrop-blur-md border-b border-[#2A2A2A] px-4 py-3 flex items-center justify-between flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <button
               onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 rounded-lg text-[#B3B3B3] hover:text-white hover:bg-[#2A2A2A] transition-all"
+              aria-label="Open chat history"
             >
-              <Menu size={20} />
+              <Menu size={18} />
             </button>
-            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-xl shadow-sm hidden sm:block">
-              <Bot className="h-5 w-5 text-white" />
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#F4C542] flex items-center justify-center shadow-md shadow-[#D4AF37]/20 hidden sm:flex flex-shrink-0">
+              <Bot className="h-5 w-5 text-black" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-semibold text-gray-900">LegalEase AI</h2>
-              <p className="text-xs sm:text-sm text-gray-500">Consumer Rights Expert</p>
+              <h2 className="text-base font-bold text-white leading-none">MIKE</h2>
+              <p className="text-xs text-[#D4AF37] mt-0.5">AI Legal Assistant</p>
             </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5 text-xs text-[#B3B3B3] bg-[#0A0A0A] border border-[#2A2A2A] rounded-full px-3 py-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
+              Online
+            </span>
           </div>
         </div>
 
-        {/* Chat Feed */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 space-y-6 bg-white scroll-smooth pb-32">
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 bg-[#1A1A1A]">
           {isLoading ? (
             <div className="flex justify-center items-center h-full">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+              <div className="flex flex-col items-center gap-3">
+                <Loader2 className="h-8 w-8 animate-spin text-[#D4AF37]" />
+                <p className="text-sm text-[#B3B3B3]">Loading conversation...</p>
+              </div>
             </div>
           ) : (
-            <div className="max-w-3xl mx-auto space-y-8">
+            <div className="max-w-3xl mx-auto space-y-6 pb-36">
+              {/* Suggested prompts on new chat */}
+              {isNewChat && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.4 }}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2"
+                >
+                  {SUGGESTED_PROMPTS.map((prompt, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleSendMessage(prompt)}
+                      disabled={isTyping}
+                      className="flex items-center justify-between gap-3 p-4 bg-[#111111] border border-[#2A2A2A] rounded-xl text-left text-sm text-[#B3B3B3] hover:text-white hover:border-[#D4AF37]/40 hover:bg-[#1A1A1A] transition-all duration-200 group disabled:opacity-50"
+                    >
+                      <span className="line-clamp-2 leading-relaxed">{prompt}</span>
+                      <ArrowRight className="h-4 w-4 flex-shrink-0 text-[#D4AF37] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+
               {messages.map((msg, idx) => (
-                <motion.div 
+                <motion.div
+                  key={idx}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  key={idx} 
+                  transition={{ duration: 0.25 }}
                   className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`flex max-w-[90%] sm:max-w-[85%] ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                    
+                  <div className={`flex max-w-[88%] sm:max-w-[82%] gap-3 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
                     {/* Avatar */}
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 mt-1">
                       {msg.role === "user" ? (
-                        <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-medium text-sm ml-3 shadow-sm">
-                          {user?.full_name?.charAt(0).toUpperCase() || <User size={16} />}
+                        <div className="h-8 w-8 rounded-full bg-[#D4AF37] text-black flex items-center justify-center font-bold text-sm shadow-sm">
+                          {user?.full_name?.charAt(0).toUpperCase() || <User size={14} />}
                         </div>
                       ) : (
-                        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mr-3 shadow-sm">
-                          <Scale className="h-4 w-4 text-white" />
+                        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#F4C542] flex items-center justify-center shadow-sm">
+                          <Scale className="h-4 w-4 text-black" />
                         </div>
                       )}
                     </div>
 
-                    {/* Message Bubble */}
-                    <div className={`
-                      px-5 py-3.5 rounded-2xl
-                      ${msg.role === "user" 
-                        ? "bg-indigo-600 text-white rounded-tr-sm shadow-sm" 
-                        : "bg-gray-50 border border-gray-200/60 text-gray-800 rounded-tl-sm prose prose-sm sm:prose-base prose-blue max-w-none shadow-sm"
-                      }
-                    `}>
+                    {/* Bubble */}
+                    <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                      msg.role === "user"
+                        ? "bg-[#D4AF37] text-black rounded-tr-sm font-medium"
+                        : "bg-[#0A0A0A] border border-[#2A2A2A] text-white rounded-tl-sm prose prose-sm prose-invert max-w-none"
+                    }`}>
                       {msg.role === "user" ? (
-                        <p className="whitespace-pre-wrap m-0 font-medium">{msg.content}</p>
+                        <p className="whitespace-pre-wrap m-0">{msg.content}</p>
                       ) : (
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                          {msg.content}
-                        </ReactMarkdown>
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
                       )}
                     </div>
                   </div>
@@ -285,17 +300,23 @@ export const ChatInterface: React.FC = () => {
 
               {/* Typing Indicator */}
               {isTyping && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
-                  <div className="flex max-w-[80%] flex-row">
-                    <div className="flex-shrink-0">
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mr-3 shadow-sm">
-                        <Scale className="h-4 w-4 text-white" />
-                      </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex justify-start"
+                >
+                  <div className="flex gap-3">
+                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#F4C542] flex items-center justify-center mt-1 flex-shrink-0">
+                      <Scale className="h-4 w-4 text-black" />
                     </div>
-                    <div className="px-5 py-4 bg-gray-50 border border-gray-200/60 rounded-2xl rounded-tl-sm shadow-sm flex space-x-1.5 items-center">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: "0.15s" }}></div>
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: "0.3s" }}></div>
+                    <div className="px-4 py-3.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl rounded-tl-sm flex items-center gap-1.5">
+                      {[0, 0.15, 0.3].map((delay, i) => (
+                        <div
+                          key={i}
+                          className="w-2 h-2 bg-[#D4AF37] rounded-full animate-bounce"
+                          style={{ animationDelay: `${delay}s` }}
+                        />
+                      ))}
                     </div>
                   </div>
                 </motion.div>
@@ -305,34 +326,39 @@ export const ChatInterface: React.FC = () => {
           )}
         </div>
 
-        {/* Input Area - Floating at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent pt-10">
-          <form onSubmit={handleSendMessage} className="max-w-3xl mx-auto relative group">
+        {/* Input Area */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/95 to-transparent pt-8">
+          <form
+            onSubmit={handleSendMessage}
+            className="max-w-3xl mx-auto relative"
+          >
             <textarea
-              className="w-full px-5 py-4 pr-16 bg-white border border-gray-300 rounded-2xl shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none overflow-hidden text-gray-900"
-              placeholder="Ask LegalEase AI..."
+              ref={textareaRef}
+              className="w-full px-5 py-4 pr-14 bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl shadow-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 focus:border-[#D4AF37] transition-all resize-none text-white placeholder:text-[#B3B3B3] text-sm"
+              placeholder="Describe your consumer issue... (Shift+Enter for new line)"
               value={inputMessage}
               onChange={(e) => {
                 setInputMessage(e.target.value);
-                e.target.style.height = 'auto';
-                e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+                e.target.style.height = "auto";
+                e.target.style.height = Math.min(e.target.scrollHeight, 120) + "px";
               }}
               onKeyDown={handleKeyDown}
               disabled={isTyping}
               rows={1}
-              style={{ minHeight: '56px', maxHeight: '120px' }}
+              style={{ minHeight: "56px", maxHeight: "120px" }}
             />
             <button
               type="submit"
               disabled={isTyping || !inputMessage.trim()}
-              className="absolute right-2 bottom-2 inline-flex items-center justify-center h-10 w-10 border border-transparent rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-40 transition-all shadow-md"
+              className="absolute right-2 bottom-2 h-10 w-10 rounded-xl bg-[#D4AF37] hover:bg-[#F4C542] text-black flex items-center justify-center transition-all duration-200 shadow-md disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
+              aria-label="Send message"
             >
-              <Send className="h-4 w-4 ml-0.5" />
+              {isTyping ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4 ml-0.5" />}
             </button>
           </form>
-          <div className="text-center mt-2 pb-1">
-            <span className="text-[10px] text-gray-400">LegalEase AI can make mistakes. Verify legal information.</span>
-          </div>
+          <p className="text-center text-[10px] text-[#B3B3B3] mt-2">
+            MIKE can make mistakes. Always verify important legal information with a qualified professional.
+          </p>
         </div>
       </div>
     </div>

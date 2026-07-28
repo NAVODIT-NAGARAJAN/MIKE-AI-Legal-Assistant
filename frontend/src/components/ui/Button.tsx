@@ -13,11 +13,11 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const variantStyles: Record<ButtonVariant, string> = {
   default:
-    "bg-blue-600 text-white border border-transparent hover:bg-blue-700 focus:ring-blue-500 shadow-sm",
+    "bg-[#D4AF37] text-black border border-transparent hover:bg-[#F4C542] focus:ring-[#D4AF37] shadow-sm",
   outline:
-    "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-blue-500",
+    "bg-[#1A1A1A] text-white border border-[#D4AF37] hover:bg-[#D4AF37]/10 focus:ring-[#D4AF37]",
   ghost:
-    "bg-transparent text-gray-600 border border-transparent hover:bg-gray-100 hover:text-gray-900 focus:ring-gray-400",
+    "bg-transparent text-[#B3B3B3] border border-transparent hover:bg-[#111111] hover:text-white focus:ring-gray-400",
   danger:
     "bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 focus:ring-red-500",
 };

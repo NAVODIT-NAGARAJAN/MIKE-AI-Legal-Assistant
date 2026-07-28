@@ -2,10 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { casesApi, CaseListItem } from "../../api/cases";
 import { Button } from "../../components/ui/Button";
-import { Card, CardContent, CardHeader } from "../../components/ui/Card";
-import { PlusCircle, Search, Trash2, Edit, FileText, ChevronRight } from "lucide-react";
+import { Card } from "../../components/ui/Card";
+import {
+  PlusCircle,
+  Search,
+  Trash2,
+  Edit,
+  FileText,
+  ChevronRight,
+  Filter,
+  X,
+} from "lucide-react";
 import { toast } from "react-toastify";
-import { Input } from "../../components/ui/Input";
+
 import { motion } from "framer-motion";
 import {
   AlertDialog,
@@ -21,10 +30,13 @@ import {
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { formatCategory } from "../../lib/caseUtils";
 
+const STATUS_OPTIONS = ["ALL", "OPEN", "IN_PROGRESS", "REPORT_GENERATED"];
+
 export const CasesList: React.FC = () => {
   const [cases, setCases] = useState<CaseListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
   const navigate = useNavigate();
 
   const fetchCases = async () => {
@@ -45,7 +57,6 @@ export const CasesList: React.FC = () => {
 
   const handleDelete = async (id: string, e: React.MouseEvent) => {
     e.preventDefault();
-    
     try {
       await casesApi.deleteCase(id);
       toast.success("Case deleted successfully");
@@ -55,161 +66,266 @@ export const CasesList: React.FC = () => {
     }
   };
 
-  const filteredCases = cases.filter(c => 
-    c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.product_or_service.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-
+  const filteredCases = cases.filter((c) => {
+    const matchesSearch =
+      c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.product_or_service.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = statusFilter === "ALL" || c.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   const tableVariants = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.05 }
-    }
+    show: { opacity: 1, transition: { staggerChildren: 0.04 } },
   };
-
   const rowVariants = {
-    hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.3 } }
+    hidden: { opacity: 0, y: 8 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.25 } },
   };
 
   return (
     <div className="space-y-8">
-      <motion.div 
+      {/* Header */}
+      <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 border-b border-gray-200 pb-6"
+        className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-5 border-b border-[#2A2A2A] pb-7"
       >
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">My Cases</h1>
-          <p className="mt-2 text-gray-500">Manage and track the progress of your consumer disputes.</p>
+        <div className="space-y-1">
+          <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            My Cases
+          </h1>
+          <p className="text-[#B3B3B3] text-base">
+            Manage and track your consumer dispute progress.
+          </p>
         </div>
-        <Button onClick={() => navigate("/cases/new")} className="flex items-center shadow-sm">
-          <PlusCircle className="mr-2 h-4 w-4" />
+        <Button
+          onClick={() => navigate("/cases/new")}
+          className="flex items-center gap-2 h-11 px-6 shadow-lg shadow-[#D4AF37]/10 w-full sm:w-auto"
+        >
+          <PlusCircle className="h-4 w-4" />
           Report New Issue
         </Button>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-        <Card className="border-gray-200 shadow-sm overflow-hidden bg-white">
-          <CardHeader className="bg-gray-50/50 border-b border-gray-100 py-4 px-6">
-            <div className="relative max-w-md w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                id="search"
-                label=""
-                placeholder="Search cases by title or product..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-10 bg-white border-gray-200 text-sm focus:border-blue-500 focus:ring-blue-500 transition-colors"
-              />
-            </div>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Case Details</th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">Category</th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Date Reported</th>
-                    <th scope="col" className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
-                  </tr>
-                </thead>
-                <motion.tbody 
-                  className="bg-white divide-y divide-gray-100"
-                  variants={tableVariants}
-                  initial="hidden"
-                  animate="show"
-                >
-                  {isLoading ? (
-                    <tr><td colSpan={5} className="px-6 py-12 text-center text-sm text-gray-500 animate-pulse">Loading cases...</td></tr>
-                  ) : filteredCases.length === 0 ? (
-                    <tr>
-                      <td colSpan={5} className="px-6 py-16 text-center">
-                        <div className="flex flex-col items-center justify-center">
-                          <FileText className="h-12 w-12 text-gray-300 mb-4" />
-                          <p className="text-gray-500 text-lg">No cases found.</p>
-                          {searchQuery && <p className="text-gray-400 text-sm mt-1">Try adjusting your search query.</p>}
+      {/* Search + Filter Bar */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+        className="flex flex-col sm:flex-row gap-3"
+      >
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#B3B3B3] h-4 w-4 pointer-events-none" />
+          <input
+            type="text"
+            placeholder="Search by title or product..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full h-11 pl-10 pr-10 bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl text-white placeholder:text-[#B3B3B3] text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37] transition-all duration-200"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#B3B3B3] hover:text-white transition-colors"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          <Filter className="h-4 w-4 text-[#B3B3B3] flex-shrink-0" />
+          <div className="flex gap-2 flex-wrap">
+            {STATUS_OPTIONS.map((s) => (
+              <button
+                key={s}
+                onClick={() => setStatusFilter(s)}
+                className={`h-9 px-3 rounded-lg text-xs font-semibold border transition-all duration-200 ${
+                  statusFilter === s
+                    ? "bg-[#D4AF37] text-black border-[#D4AF37]"
+                    : "bg-[#1A1A1A] text-[#B3B3B3] border-[#2A2A2A] hover:border-[#D4AF37]/50 hover:text-white"
+                }`}
+              >
+                {s === "ALL" ? "All" : s.replace(/_/g, " ")}
+              </button>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Table */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.15 }}
+      >
+        <Card className="border border-[#2A2A2A] bg-[#1A1A1A] rounded-2xl overflow-hidden shadow-sm">
+          <div className="overflow-x-auto">
+            <table className="min-w-full">
+              <thead>
+                <tr className="bg-[#0A0A0A] border-b border-[#2A2A2A]">
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-[#B3B3B3] uppercase tracking-widest">
+                    Case
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-[#B3B3B3] uppercase tracking-widest hidden sm:table-cell">
+                    Category
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-[#B3B3B3] uppercase tracking-widest">
+                    Status
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-[#B3B3B3] uppercase tracking-widest hidden md:table-cell">
+                    Reported
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-right text-xs font-bold text-[#B3B3B3] uppercase tracking-widest">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <motion.tbody
+                className="divide-y divide-[#2A2A2A]"
+                variants={tableVariants}
+                initial="hidden"
+                animate="show"
+              >
+                {isLoading ? (
+                  [1, 2, 3, 4, 5].map((i) => (
+                    <tr key={i}>
+                      <td className="px-6 py-4">
+                        <div className="space-y-2">
+                          <div className="skeleton h-4 w-40 rounded" />
+                          <div className="skeleton h-3 w-24 rounded" />
                         </div>
                       </td>
+                      <td className="px-6 py-4 hidden sm:table-cell">
+                        <div className="skeleton h-4 w-28 rounded" />
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="skeleton h-6 w-20 rounded-full" />
+                      </td>
+                      <td className="px-6 py-4 hidden md:table-cell">
+                        <div className="skeleton h-4 w-24 rounded" />
+                      </td>
+                      <td className="px-6 py-4" />
                     </tr>
-                  ) : (
-                    filteredCases.map(c => (
-                      <motion.tr key={c.id} variants={rowVariants} className="hover:bg-blue-50/50 transition-colors group cursor-default">
-                        <td className="px-6 py-4">
-                          <Link to={`/cases/${c.id}`} className="block">
-                            <span className="text-sm font-semibold text-gray-900 group-hover:text-blue-700 transition-colors block mb-1">
-                              {c.title}
-                            </span>
-                            <span className="text-xs text-gray-500 sm:hidden">
-                              {formatCategory(c.category)}
-                            </span>
-                          </Link>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 hidden sm:table-cell">
+                  ))
+                ) : filteredCases.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-20 text-center">
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="h-14 w-14 rounded-2xl bg-[#111111] border border-[#2A2A2A] flex items-center justify-center">
+                          <FileText className="h-6 w-6 text-[#D4AF37]" />
+                        </div>
+                        <div>
+                          <p className="text-white font-semibold text-base">No cases found</p>
+                          <p className="text-[#B3B3B3] text-sm mt-1">
+                            {searchQuery
+                              ? "Try a different search term or clear the filter."
+                              : "You haven't reported any issues yet."}
+                          </p>
+                        </div>
+                        {!searchQuery && (
+                          <Button
+                            onClick={() => navigate("/cases/new")}
+                            className="gap-2 h-10 px-6 mt-1"
+                          >
+                            <PlusCircle className="h-4 w-4" />
+                            Report an Issue
+                          </Button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  filteredCases.map((c) => (
+                    <motion.tr
+                      key={c.id}
+                      variants={rowVariants}
+                      className="hover:bg-[#111111]/60 transition-colors duration-150 group"
+                    >
+                      <td className="px-6 py-4">
+                        <Link to={`/cases/${c.id}`} className="block">
+                          <span className="text-sm font-semibold text-white group-hover:text-[#D4AF37] transition-colors block mb-0.5">
+                            {c.title}
+                          </span>
+                          <span className="text-xs text-[#B3B3B3] sm:hidden">
+                            {formatCategory(c.category)}
+                          </span>
+                        </Link>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap hidden sm:table-cell">
+                        <span className="text-sm text-[#B3B3B3]">
                           {formatCategory(c.category)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <StatusBadge status={c.status} />
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
-                          {new Date(c.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <div className="flex items-center justify-end space-x-2">
-                            <Link 
-                              to={`/cases/${c.id}`} 
-                              className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors sm:hidden"
-                              title="View Details"
-                              aria-label={`View details for ${c.title}`}
-                            >
-                              <ChevronRight className="h-4 w-4" />
-                            </Link>
-                            <Link 
-                              to={`/cases/${c.id}/edit`} 
-                              className="p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
-                              title="Edit Case"
-                              aria-label={`Edit case ${c.title}`}
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Link>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <button 
-                                  className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
-                                  title="Delete Case"
-                                  aria-label={`Delete case ${c.title}`}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    This action cannot be undone. This will permanently delete your case.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                  <AlertDialogAction onClick={(e) => handleDelete(c.id, e as any)}>Continue</AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </div>
-                        </td>
-                      </motion.tr>
-                    ))
-                  )}
-                </motion.tbody>
-              </table>
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <StatusBadge status={c.status} />
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
+                        <span className="text-sm text-[#B3B3B3]">
+                          {new Date(c.created_at).toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <Link
+                            to={`/cases/${c.id}`}
+                            className="p-2 rounded-lg text-[#B3B3B3] hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all duration-200 sm:hidden focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
+                            aria-label={`View details for ${c.title}`}
+                          >
+                            <ChevronRight className="h-4 w-4" />
+                          </Link>
+                          <Link
+                            to={`/cases/${c.id}/edit`}
+                            className="p-2 rounded-lg text-[#B3B3B3] hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
+                            aria-label={`Edit case ${c.title}`}
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Link>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <button
+                                className="p-2 rounded-lg text-[#B3B3B3] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/30"
+                                aria-label={`Delete case ${c.title}`}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Delete this case?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  This action cannot be undone. The case and all associated data will be permanently deleted.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={(e) => handleDelete(c.id, e as any)}>
+                                  Delete
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))
+                )}
+              </motion.tbody>
+            </table>
+          </div>
+          {!isLoading && filteredCases.length > 0 && (
+            <div className="px-6 py-3 border-t border-[#2A2A2A] bg-[#0A0A0A]/40 flex items-center justify-between">
+              <span className="text-xs text-[#B3B3B3]">
+                Showing <span className="font-medium text-white">{filteredCases.length}</span> of{" "}
+                <span className="font-medium text-white">{cases.length}</span> cases
+              </span>
             </div>
-          </CardContent>
+          )}
         </Card>
       </motion.div>
     </div>

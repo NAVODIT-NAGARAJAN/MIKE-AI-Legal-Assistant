@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet, Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { LogOut, LayoutDashboard, FileText, MessageCircle, Menu, X, Scale } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, MessageCircle, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const Layout: React.FC = () => {
@@ -15,29 +15,33 @@ export const Layout: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen flex bg-gray-50/50">
+    <div className="min-h-screen flex bg-[#0A0A0A]/50">
       {/* Sidebar */}
       <motion.aside
         initial={{ width: 260 }}
         animate={{ width: isSidebarOpen ? 260 : 72 }}
-        className="hidden md:flex flex-col bg-white border-r border-gray-200 z-10 sticky top-0 h-screen transition-all duration-300 shadow-sm"
+        className="hidden md:flex flex-col bg-[#111111] border-r border-[#2A2A2A] z-10 sticky top-0 h-screen transition-all duration-300 shadow-sm"
       >
-        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-[#2A2A2A]">
           <Link to="/" className={`flex items-center space-x-3 overflow-hidden ${!isSidebarOpen && 'justify-center'}`}>
-            <div className="bg-blue-600 text-white p-1.5 rounded-lg flex-shrink-0">
-              <Scale size={20} />
-            </div>
+            <img src="/mike-logo.png" alt="MIKE Logo" className="h-9 w-9 object-contain flex-shrink-0" />
             {isSidebarOpen && (
-              <span className="font-semibold text-lg text-gray-900 tracking-tight whitespace-nowrap">
-                LegalEase AI
-              </span>
+              <div className="flex flex-col">
+                <span className="font-bold text-lg text-white tracking-wider leading-none">
+                  MIKE
+                </span>
+                <span className="text-[10px] text-[#D4AF37] font-medium tracking-wide mt-0.5">
+                  AI Legal Assistant
+                </span>
+              </div>
             )}
           </Link>
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="text-gray-400 hover:text-gray-600 transition-colors hidden md:block"
+            className="flex-shrink-0 p-1 rounded-lg text-[#B3B3B3] hover:text-white hover:bg-[#2A2A2A] transition-all duration-200 hidden md:flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40"
+            aria-label={isSidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
           >
-            {isSidebarOpen ? <X size={18} /> : <Menu size={18} />}
+            {isSidebarOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
         </div>
 
@@ -47,10 +51,10 @@ export const Layout: React.FC = () => {
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                `relative flex items-center px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/40 ${
                   isActive
-                    ? "bg-blue-50 text-blue-700"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    ? 'bg-[#D4AF37]/10 text-[#D4AF37] shadow-sm'
+                    : 'text-[#B3B3B3] hover:bg-[#1A1A1A] hover:text-white'
                 } ${!isSidebarOpen && 'justify-center'}`
               }
               title={!isSidebarOpen ? item.name : undefined}
@@ -63,22 +67,24 @@ export const Layout: React.FC = () => {
           ))}
         </div>
 
-        <div className="p-4 border-t border-gray-100">
+        <div className="p-4 border-t border-[#2A2A2A]">
           <div className={`flex items-center ${isSidebarOpen ? 'justify-between' : 'justify-center'}`}>
             {isSidebarOpen && (
-              <div className="flex items-center min-w-0">
-                <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold flex-shrink-0">
-                  {user?.full_name?.charAt(0) || 'U'}
+              <div className="flex items-center min-w-0 flex-1">
+                <div className="h-9 w-9 rounded-full bg-[#D4AF37] flex items-center justify-center text-black font-bold text-sm flex-shrink-0 shadow-sm">
+                  {user?.full_name?.charAt(0).toUpperCase() || 'U'}
                 </div>
                 <div className="ml-3 truncate">
-                  <p className="text-sm font-medium text-gray-900 truncate">{user?.full_name}</p>
+                  <p className="text-sm font-semibold text-white truncate leading-tight">{user?.full_name}</p>
+                  <p className="text-xs text-[#B3B3B3] truncate mt-0.5">{user?.email || 'Consumer'}</p>
                 </div>
               </div>
             )}
             <button
               onClick={logout}
-              className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+              className="p-2 rounded-lg text-[#B3B3B3] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/30"
               title="Logout"
+              aria-label="Logout"
             >
               <LogOut size={18} />
             </button>
@@ -89,21 +95,25 @@ export const Layout: React.FC = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile Header */}
-        <header className="md:hidden bg-white border-b border-gray-200 sticky top-0 z-20">
+        <header className="md:hidden bg-[#1A1A1A] border-b border-[#2A2A2A] sticky top-0 z-20">
           <div className="flex items-center justify-between h-16 px-4">
-            <Link to="/" className="flex items-center space-x-2">
-              <Scale className="text-blue-600" size={24} />
-              <span className="font-semibold text-lg text-gray-900">LegalEase AI</span>
+            <Link to="/" className="flex items-center space-x-3">
+              <img src="/mike-logo.png" alt="MIKE Logo" className="h-8 w-8 object-contain flex-shrink-0" />
+              <div className="flex flex-col">
+                <span className="font-bold text-base text-white tracking-wider leading-none">MIKE</span>
+                <span className="text-[9px] text-[#D4AF37] font-medium tracking-wide mt-0.5">AI Legal Assistant</span>
+              </div>
             </Link>
             <button
               onClick={logout}
-              className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+              className="p-2 rounded-lg text-[#B3B3B3] hover:text-red-400 hover:bg-red-500/10 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/30"
+              aria-label="Logout"
             >
               <LogOut size={20} />
             </button>
           </div>
           {/* Mobile Navigation (Simple Horizontal Scroll) */}
-          <nav className="flex overflow-x-auto py-2 px-4 gap-2 no-scrollbar bg-gray-50 border-t border-gray-100">
+          <nav className="flex overflow-x-auto py-2 px-4 gap-2 no-scrollbar bg-[#0A0A0A] border-t border-[#2A2A2A]">
              {navItems.map((item) => (
               <NavLink
                 key={item.path}
@@ -111,8 +121,8 @@ export const Layout: React.FC = () => {
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                     isActive
-                      ? "bg-blue-600 text-white shadow-sm"
-                      : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                      ? "bg-[#D4AF37] text-black shadow-sm"
+                      : "bg-[#1A1A1A] text-[#B3B3B3] border border-[#2A2A2A] hover:bg-[#0A0A0A]"
                   }`
                 }
               >

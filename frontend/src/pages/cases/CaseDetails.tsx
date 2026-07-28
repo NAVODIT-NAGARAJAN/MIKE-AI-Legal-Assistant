@@ -2,36 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { casesApi, Case } from "../../api/cases";
 import { Button } from "../../components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/Card";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../components/ui/Card";
-import {
-  ArrowLeft,
-  Edit,
-  Trash2,
-  Bot,
-  Calendar,
-  Store,
-  Tag,
-  Clock,
-  Sparkles,
-  FileText
+  ArrowLeft, Edit, Trash2, Bot, Calendar, Store, Tag,
+  Clock, Sparkles, FileText, MapPin,
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader,
+  AlertDialogTitle, AlertDialogTrigger,
 } from "../../components/ui/alert-dialog";
 import { StatusBadge } from "../../components/ui/StatusBadge";
 import { formatCategory } from "../../lib/caseUtils";
@@ -39,19 +20,14 @@ import { formatCategory } from "../../lib/caseUtils";
 export const CaseDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
   const [caseData, setCaseData] = useState<Case | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
-      casesApi
-        .getCase(id)
+      casesApi.getCase(id)
         .then(setCaseData)
-        .catch(() => {
-          toast.error("Failed to load case details.");
-          navigate("/cases");
-        })
+        .catch(() => { toast.error("Failed to load case details."); navigate("/cases"); })
         .finally(() => setIsLoading(false));
     }
   }, [id, navigate]);
@@ -66,127 +42,132 @@ export const CaseDetails: React.FC = () => {
     }
   };
 
-  const handleConsultAI = () => {
-    navigate(`/chat?caseId=${id}`);
-  };
+  const handleConsultAI = () => navigate(`/chat?caseId=${id}`);
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-pulse flex flex-col items-center">
-          <div className="h-12 w-12 bg-blue-100 rounded-full mb-4"></div>
-          <div className="h-4 w-32 bg-gray-200 rounded"></div>
+      <div className="space-y-8 max-w-5xl mx-auto">
+        <div className="skeleton h-9 w-32 rounded-xl" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 skeleton h-80 rounded-2xl" />
+          <div className="space-y-6">
+            <div className="skeleton h-56 rounded-2xl" />
+            <div className="skeleton h-40 rounded-2xl" />
+          </div>
         </div>
       </div>
     );
   }
 
-  if (!caseData) {
-    return null;
-  }
-
-
+  if (!caseData) return null;
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
+    show: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
-
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+    show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
   };
+
+  const metaItems = [
+    { icon: <Tag className="w-4 h-4 text-[#D4AF37]" />, label: "Category", value: formatCategory(caseData.category) },
+    { icon: <Store className="w-4 h-4 text-[#D4AF37]" />, label: "Product / Service", value: caseData.product_or_service },
+    { icon: <MapPin className="w-4 h-4 text-[#D4AF37]" />, label: "Seller / Provider", value: caseData.seller_name || "Not specified", muted: !caseData.seller_name },
+    { icon: <Calendar className="w-4 h-4 text-[#D4AF37]" />, label: "Purchase Date", value: caseData.purchase_date || "Not specified", muted: !caseData.purchase_date },
+  ];
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
-      <motion.div 
+      {/* Topbar */}
+      <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex flex-col md:flex-row md:justify-between md:items-center gap-4"
+        transition={{ duration: 0.4 }}
+        className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"
       >
         <Button
           variant="ghost"
           onClick={() => navigate("/cases")}
-          className="px-0 hover:bg-transparent text-gray-500 hover:text-gray-900 w-fit"
+          className="px-0 hover:bg-transparent text-[#B3B3B3] hover:text-white w-fit gap-2"
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
+          <ArrowLeft className="h-4 w-4" />
           Back to Cases
         </Button>
-
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-2">
           <Button
             variant="outline"
             onClick={() => navigate(`/cases/${id}/edit`)}
-            className="bg-white"
+            className="bg-[#1A1A1A] gap-2 h-10"
             aria-label="Edit Case"
           >
-            <Edit className="mr-2 h-4 w-4 text-gray-500" />
-            Edit Case
+            <Edit className="h-4 w-4 text-[#B3B3B3]" />
+            Edit
           </Button>
-
-          <Button
-            onClick={handleConsultAI}
-            className="bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-200 transition-all"
-          >
-            <Bot className="mr-2 h-4 w-4" />
-            Consult AI
-          </Button>
-
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="outline" className="text-red-600 hover:bg-red-50 hover:text-red-700 hover:border-red-200" aria-label="Delete Case">
-                <Trash2 className="h-4 w-4 md:mr-2" />
-                <span className="hidden md:inline">Delete</span>
+              <Button
+                variant="outline"
+                className="gap-2 h-10 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 hover:border-red-500/50"
+                aria-label="Delete Case"
+              >
+                <Trash2 className="h-4 w-4" />
+                <span className="hidden sm:inline">Delete</span>
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogTitle>Delete this case?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete your case.
+                  This action cannot be undone. The case and all associated AI consultation data will be permanently deleted.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
+                <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+          <Button
+            onClick={handleConsultAI}
+            className="gap-2 h-10 px-5 shadow-md shadow-[#D4AF37]/15"
+          >
+            <Bot className="h-4 w-4" />
+            Consult AI
+          </Button>
         </div>
       </motion.div>
 
-      <motion.div 
+      {/* Content Grid */}
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="show"
         className="grid grid-cols-1 lg:grid-cols-3 gap-6"
       >
-        {/* Main Case Info */}
+        {/* Main Card */}
         <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
-          <Card className="border-gray-200 shadow-sm bg-white overflow-hidden h-full">
-            <CardHeader className="bg-gray-50/50 border-b border-gray-100 pb-5 pt-6">
+          <Card className="border border-[#2A2A2A] bg-[#1A1A1A] rounded-2xl overflow-hidden shadow-sm">
+            <CardHeader className="bg-[#0A0A0A]/60 border-b border-[#2A2A2A] px-6 pt-6 pb-5">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
-                <div className="space-y-1">
-                  <span className="text-xs font-semibold text-blue-600 tracking-wider uppercase">Issue Details</span>
-                  <CardTitle className="text-2xl font-bold text-gray-900 leading-tight">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-bold text-[#D4AF37] tracking-widest uppercase">
+                    Issue Details
+                  </span>
+                  <CardTitle className="text-2xl font-bold text-white leading-tight">
                     {caseData.title}
                   </CardTitle>
                 </div>
                 <StatusBadge status={caseData.status} />
               </div>
             </CardHeader>
-
-            <CardContent className="pt-6">
-              <div className="space-y-4">
-                <div className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2 border-b border-gray-100 pb-2">
-                  <FileText className="w-4 h-4 text-gray-400" />
-                  <span>Description</span>
+            <CardContent className="px-6 pt-6 pb-6">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sm font-semibold text-[#B3B3B3] pb-3 border-b border-[#2A2A2A]">
+                  <FileText className="w-4 h-4 text-[#D4AF37]" />
+                  Description
                 </div>
-                <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm bg-gray-50/50 p-5 rounded-xl border border-gray-100">
+                <p className="text-[#B3B3B3] whitespace-pre-wrap leading-relaxed text-sm bg-[#0A0A0A]/50 p-5 rounded-xl border border-[#2A2A2A]">
                   {caseData.description}
                 </p>
               </div>
@@ -194,90 +175,82 @@ export const CaseDetails: React.FC = () => {
           </Card>
         </motion.div>
 
-        {/* Sidebar Metadata */}
-        <motion.div variants={itemVariants} className="space-y-6">
-          <Card className="border-gray-200 shadow-sm bg-white">
-            <CardHeader className="pb-3 border-b border-gray-100">
-              <CardTitle className="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center">
-                <Tag className="w-4 h-4 mr-2 text-gray-400" />
+        {/* Right Column */}
+        <motion.div variants={itemVariants} className="space-y-5">
+          {/* Metadata */}
+          <Card className="border border-[#2A2A2A] bg-[#1A1A1A] rounded-2xl overflow-hidden shadow-sm">
+            <CardHeader className="px-5 pt-5 pb-4 border-b border-[#2A2A2A]">
+              <CardTitle className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                <Tag className="w-4 h-4 text-[#D4AF37]" />
                 Metadata
               </CardTitle>
             </CardHeader>
-            <CardContent className="pt-5 space-y-5">
-              <div>
-                <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Category</dt>
-                <dd className="text-sm font-medium text-gray-900 bg-gray-50 px-3 py-2 rounded-lg border border-gray-100 inline-block">
-                  {formatCategory(caseData.category)}
-                </dd>
-              </div>
-
-              <div>
-                <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1 flex items-center">
-                  <Store className="w-3.5 h-3.5 mr-1.5" /> Product / Service
+            <CardContent className="px-5 pt-4 pb-5 space-y-4">
+              {metaItems.map((item, i) => (
+                <div key={i} className="space-y-1">
+                  <dt className="flex items-center gap-1.5 text-xs font-semibold text-[#B3B3B3] uppercase tracking-wider">
+                    {item.icon}
+                    {item.label}
+                  </dt>
+                  <dd className={`text-sm pl-5 ${item.muted ? "text-[#B3B3B3] italic" : "text-white font-medium"}`}>
+                    {item.value}
+                  </dd>
+                </div>
+              ))}
+              <div className="pt-4 border-t border-[#2A2A2A] space-y-1">
+                <dt className="flex items-center gap-1.5 text-xs font-semibold text-[#B3B3B3] uppercase tracking-wider">
+                  <Clock className="w-4 h-4 text-[#D4AF37]" />
+                  Timeline
                 </dt>
-                <dd className="text-sm text-gray-900">
-                  {caseData.product_or_service}
-                </dd>
-              </div>
-
-              <div>
-                <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1 flex items-center">
-                  <Store className="w-3.5 h-3.5 mr-1.5" /> Seller / Provider
-                </dt>
-                <dd className="text-sm text-gray-900">
-                  {caseData.seller_name || <span className="text-gray-400 italic">Not specified</span>}
-                </dd>
-              </div>
-
-              <div>
-                <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1 flex items-center">
-                  <Calendar className="w-3.5 h-3.5 mr-1.5" /> Purchase Date
-                </dt>
-                <dd className="text-sm text-gray-900">
-                  {caseData.purchase_date || <span className="text-gray-400 italic">Not specified</span>}
-                </dd>
-              </div>
-              
-              <div className="pt-4 border-t border-gray-100">
-                <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1 flex items-center">
-                  <Clock className="w-3.5 h-3.5 mr-1.5" /> Timeline
-                </dt>
-                <dd className="text-sm text-gray-600 space-y-1">
-                  <div>Reported: <span className="font-medium text-gray-900">{new Date(caseData.created_at).toLocaleDateString()}</span></div>
-                  <div>Updated: <span className="font-medium text-gray-900">{new Date(caseData.updated_at).toLocaleDateString()}</span></div>
+                <dd className="text-sm pl-5 space-y-1">
+                  <div className="text-[#B3B3B3]">
+                    Reported:{" "}
+                    <span className="font-medium text-white">
+                      {new Date(caseData.created_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}
+                    </span>
+                  </div>
+                  <div className="text-[#B3B3B3]">
+                    Updated:{" "}
+                    <span className="font-medium text-white">
+                      {new Date(caseData.updated_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}
+                    </span>
+                  </div>
                 </dd>
               </div>
             </CardContent>
           </Card>
 
           {/* AI Action Card */}
-          <Card className="border-blue-200 shadow-md bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden relative">
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-              <Sparkles className="w-24 h-24 text-blue-600" />
+          <Card className="border border-[#D4AF37]/30 bg-gradient-to-br from-[#1A1A1A] via-[#111111] to-[#0A0A0A] rounded-2xl overflow-hidden relative shadow-md shadow-[#D4AF37]/5">
+            <div className="absolute top-0 right-0 p-5 opacity-10 pointer-events-none">
+              <Sparkles className="w-20 h-20 text-[#D4AF37]" />
             </div>
-            <CardContent className="p-6 relative z-10">
-              <h4 className="text-base font-bold text-blue-900 mb-2 flex items-center">
-                <Bot className="w-5 h-5 mr-2 text-blue-600" />
-                AI Agent Status
-              </h4>
-              <p className="text-sm text-blue-700/80 mb-6 leading-relaxed">
-                {caseData.status === "OPEN"
-                  ? "The AI is ready to consult with you on this case to determine your rights and options."
-                  : "Consultation data is actively being managed by the AI."}
+            <CardContent className="px-5 pt-5 pb-5 relative z-10">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="h-8 w-8 rounded-lg bg-[#D4AF37]/15 border border-[#D4AF37]/20 flex items-center justify-center">
+                  <Bot className="w-4 h-4 text-[#D4AF37]" />
+                </div>
+                <h4 className="text-base font-bold text-white">AI Agent</h4>
+              </div>
+              <p className="text-sm text-[#B3B3B3] mb-5 leading-relaxed">
+                {caseData.status === "REPORT_GENERATED"
+                  ? "Your personalized resolution roadmap has been generated and is ready to view."
+                  : "MIKE is ready to analyze your case, identify your legal rights, and create a personalized resolution roadmap."}
               </p>
-              
               {caseData.status === "REPORT_GENERATED" ? (
-                <Button 
+                <Button
                   onClick={() => navigate(`/cases/${id}/roadmap`)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                  className="w-full h-10 shadow-sm gap-2"
                 >
-                  View Resolution Roadmap
+                  <FileText className="h-4 w-4" />
+                  View Roadmap
                 </Button>
               ) : (
-                <Button 
+                <Button
                   onClick={handleConsultAI}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                  className="w-full h-10 shadow-sm gap-2"
                 >
+                  <Bot className="h-4 w-4" />
                   Start Consultation
                 </Button>
               )}
