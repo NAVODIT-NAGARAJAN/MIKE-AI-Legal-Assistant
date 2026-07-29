@@ -13,7 +13,8 @@ from ...core.agent_context import AgentContext
 from ...core.agent_result import AgentResult
 from ...core.base_agent import BaseAgent
 from ...core.exceptions import AgentExecutionException
-
+# pyrefly: ignore [missing-import]
+from .prompts import CASE_ANALYSIS_SYSTEM_PROMPT
 
 class CaseAnalysisAgent(BaseAgent):
     """
@@ -31,7 +32,7 @@ class CaseAnalysisAgent(BaseAgent):
 
         # Reuse the existing LangGraph executor.
         # No new LLM, prompts, or tools are created.
-        self._executor = get_agent_executor()
+        self._executor = get_agent_executor(prompt=CASE_ANALYSIS_SYSTEM_PROMPT)
 
     async def execute(
         self,
@@ -69,11 +70,11 @@ class CaseAnalysisAgent(BaseAgent):
                 }
             )
 
-        except Exception as e:
+        except Exception as exc:
             return AgentResult(
                 success=False,
                 payload=None,
-                error=e,
+                error=exc,
                 metadata={
                     "agent": "CaseAnalysisAgent"
                 }

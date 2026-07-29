@@ -55,7 +55,7 @@ def search_legal_knowledge(query: str) -> str:
         return f"Knowledge base error: {str(exc)}"
 
 
-def get_agent_executor():
+def get_agent_executor(prompt=SYSTEM_PROMPT):
     """
     Initialize and return the LangGraph ReAct agent.
     """

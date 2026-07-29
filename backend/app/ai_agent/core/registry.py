@@ -12,10 +12,16 @@ class AgentRegistry:
         self._agents: Dict[AgentRole, BaseAgent] = {}
 
         from ..agents.case_analysis.agent import CaseAnalysisAgent
+        from ..agents.legal_research.agent import LegalResearchAgent
 
         self.register_agent(
             AgentRole.CASE_ANALYSIS,
             CaseAnalysisAgent(),
+        )
+
+        self.register_agent(
+            AgentRole.LEGAL_RESEARCH,
+            LegalResearchAgent(),
         )
 
     def register_agent(

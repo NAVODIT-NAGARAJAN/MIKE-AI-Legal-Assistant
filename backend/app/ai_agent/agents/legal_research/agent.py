@@ -13,6 +13,7 @@ from ...core.agent_context import AgentContext
 from ...core.agent_result import AgentResult
 from ...core.base_agent import BaseAgent
 from ...core.exceptions import AgentExecutionException
+from .prompts import LEGAL_RESEARCH_SYSTEM_PROMPT
 
 
 class LegalResearchAgent(BaseAgent):
@@ -31,7 +32,7 @@ class LegalResearchAgent(BaseAgent):
 
         # Reuse the existing LangGraph executor.
         # No new LLM, prompts, or tools are created.
-        self._executor = get_agent_executor()
+        self._executor = get_agent_executor( prompt=LEGAL_RESEARCH_SYSTEM_PROMPT)
 
     async def execute(
         self,
