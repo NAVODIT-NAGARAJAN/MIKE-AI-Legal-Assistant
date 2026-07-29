@@ -20,12 +20,16 @@ log = get_logger(__name__)
 def search_legal_knowledge(query: str) -> str:
     """
     Search the official Indian Consumer Rights knowledge base.
-    Always use this tool to retrieve relevant legal provisions,
-    rules, and guidance.
+
+    Always use this tool whenever legal information, consumer rights,
+    acts, rules, penalties, compensation, procedures, or legal guidance
+    are required.
     """
 
+    log.info("=" * 60)
     log.info("Knowledge Search Tool Called")
     log.info(f"Query: {query}")
+    log.info("=" * 60)
 
     try:
         svc = KnowledgeBaseService()
@@ -33,7 +37,7 @@ def search_legal_knowledge(query: str) -> str:
 
         if not results:
             log.info("No knowledge base results found.")
-            return "No relevant legal information found in the knowledge base."
+            return "No relevant legal information was found in the knowledge base."
 
         context = []
 
@@ -48,7 +52,7 @@ def search_legal_knowledge(query: str) -> str:
 
     except Exception as exc:
         log.exception("Knowledge Base Search Failed")
-        return f"Error retrieving knowledge: {str(exc)}"
+        return f"Knowledge base error: {str(exc)}"
 
 
 def get_agent_executor():
@@ -57,6 +61,7 @@ def get_agent_executor():
     """
 
     log.info("=" * 60)
+    log.info("Initializing MIKE AI Agent")
     log.info(f"Using Gemini Model : {settings.gemini_model}")
     log.info(f"API Key Loaded     : {bool(settings.gemini_api_key)}")
     log.info(f"Temperature        : {settings.gemini_temperature}")
@@ -68,13 +73,23 @@ def get_agent_executor():
         temperature=settings.gemini_temperature,
     )
 
-    tools = []
+    # --------------------------------------------------------
+    # Register ALL LangChain tools here
+    # --------------------------------------------------------
+
+    tools = [
+        search_legal_knowledge,
+    ]
+
+    log.info("Registered Tools:")
+    for tool in tools:
+        log.info(f" - {tool.name}")
 
     log.info("Creating LangGraph ReAct Agent...")
 
     agent_executor = create_react_agent(
         model=llm,
-        tools=[],
+        tools=tools,
         prompt=SYSTEM_PROMPT,
     )
 

@@ -5,6 +5,7 @@ Service layer handling conversation state, history management,
 and invoking the LangGraph agent asynchronously.
 """
 
+
 import uuid
 from datetime import datetime, timezone
 from typing import Optional
@@ -12,7 +13,10 @@ from typing import Optional
 from langchain_core.messages import HumanMessage
 from langchain_core.messages import messages_from_dict, messages_to_dict
 
-from app.ai_agent.agent import get_agent_executor
+from app.ai_agent.core.agent_context import AgentContext
+from app.ai_agent.orchestrator.orchestrator import Orchestrator
+from app.ai_agent.core.registry import AgentRegistry
+from app.ai_agent.orchestrator.router import OrchestratorRouter
 from app.ai_agent.repository import ConversationRepository
 from app.cases.repository import CaseRepository
 from app.models.application_models import Conversation
@@ -29,7 +33,10 @@ class AIAgentService:
     ):
         self.repo = conversation_repository
         self.case_repo = case_repository
-        self.agent_executor = get_agent_executor()
+        self.orchestrator = Orchestrator(
+            registry=AgentRegistry(),
+            router=OrchestratorRouter(),
+        )
 
     async def start_conversation(
         self,
@@ -41,6 +48,7 @@ class AIAgentService:
         conv = await self.repo.create(user_id=user_id, case_id=case_id)
         return await self._process_turn(conv, initial_message)
 
+    
     async def send_message(
         self,
         conversation_id: uuid.UUID,
@@ -53,11 +61,18 @@ class AIAgentService:
         if not conv:
             raise ValueError("Conversation not found or access denied.")
 
+        # ---------------------------------------------------------
+        # Conversation remains available unless explicitly closed
+        # by the user through the frontend.
+        # ---------------------------------------------------------
         if conv.is_complete:
-            raise ValueError("Conversation is already complete.")
+            raise ValueError(
+                "This conversation has been closed by the user."
+            )
 
         return await self._process_turn(conv, message)
 
+    
     async def get_conversation(
         self,
         conversation_id: uuid.UUID,
@@ -159,17 +174,39 @@ Do not ask the user to explain the complaint again unless additional information
         log.info(enhanced_input)
 
         try:
-            result = await self.agent_executor.ainvoke(
-                {"messages": lc_messages}
+            context = AgentContext(
+                user_input=user_input,
+                conversation_id=str(conv.id),
+                user_id=str(conv.user_id),
+                case_id=str(conv.case_id) if conv.case_id else None,
+                conversation_history=ui_messages,
+                langgraph_messages=lc_messages,
+                metadata={
+                    "service": "AIAgentService"
+                },
+                shared_memory={},
             )
+
+            agent_result = await self.orchestrator.execute(context)
+
+            if not agent_result.success or agent_result.payload is None:
+                raise RuntimeError(
+                    "AI Agent failed to process message."
+                ) from (
+                    agent_result.error
+                    if agent_result.error
+                    else None
+                )
+
+            result = agent_result.payload
 
             log.info("Gemini responded successfully.")
 
         except Exception as exc:
             log.exception("Agent execution failed")
             raise RuntimeError(
-                f"AI Agent failed to process message: {exc}"
-            )
+                "AI Agent failed to process message."
+            ) from exc
 
         new_lc_messages = result["messages"]
         ai_msg = new_lc_messages[-1]
@@ -200,15 +237,19 @@ Do not ask the user to explain the complaint again unless additional information
 
         reply_content = _extract_text(reply_content)
 
-        is_complete = False
+        # ---------------------------------------------------------
+        # Conversation Lifecycle
+        # ---------------------------------------------------------
+        # MIKE never closes conversations automatically.
+        # Users can continue asking follow-up questions,
+        # modify generated documents, request translations,
+        # generate new complaint letters, or continue the
+        # consultation without interruption.
+        #
+        # Conversations will only be closed through a future
+        # frontend "Close Conversation" feature.
+        # ---------------------------------------------------------
 
-        if "[WORKFLOW_COMPLETE]" in reply_content:
-            is_complete = True
-            reply_content = reply_content.replace(
-                "[WORKFLOW_COMPLETE]", ""
-            ).strip()
-
-            log.info(f"Conversation {conv.id} marked as complete by AI.")
 
         ui_messages.append(
             {
@@ -226,11 +267,11 @@ Do not ask the user to explain the complaint again unless additional information
             conv=conv,
             new_messages=ui_messages,
             new_agent_state=new_agent_state,
-            is_complete=is_complete,
+            is_complete=conv.is_complete,
         )
 
         return {
             "conversation_id": str(conv.id),
             "reply": reply_content,
-            "is_complete": is_complete,
+            "is_complete": conv.is_complete,
         }

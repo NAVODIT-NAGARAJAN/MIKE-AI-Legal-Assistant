@@ -47,9 +47,7 @@ export const Dashboard: React.FC = () => {
     fetchCases();
   }, []);
 
-  const hour = new Date().getHours();
-  const greeting =
-    hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+  const firstName = user?.full_name?.split(" ")[0] ?? "there";
 
   const totalCases = cases.length;
   const openCases = cases.filter((c) => c.status === "OPEN").length;
@@ -106,15 +104,14 @@ export const Dashboard: React.FC = () => {
         className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 border-b border-[#2A2A2A] pb-8"
       >
         <div className="space-y-1">
-          <p className="text-sm text-[#D4AF37] font-semibold tracking-wide uppercase">
-            {greeting}
+          <p className="text-sm text-[#D4AF37] font-semibold tracking-wide uppercase mb-1">
+            Overview
           </p>
-          <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-            {user?.full_name?.split(" ")[0] ?? "Welcome"}
+          <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-2">
+            Hi, {firstName} <span className="animate-wave origin-bottom-right inline-block">👋</span>
           </h1>
-          <p className="text-[#B3B3B3] text-base max-w-xl leading-relaxed">
-            Here's an overview of your consumer rights cases and AI
-            consultation status.
+          <p className="text-[#B3B3B3] text-base max-w-xl leading-relaxed mt-2">
+            Here's a quick look at your consumer rights cases and AI consultation status. MIKE is ready to assist you.
           </p>
         </div>
         <Button
