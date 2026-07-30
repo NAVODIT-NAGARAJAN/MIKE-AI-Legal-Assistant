@@ -123,3 +123,19 @@ def _register_routers(app: FastAPI) -> None:
     # Consumer guidance reports (protected)
     from app.reports.router import router as reports_router
     app.include_router(reports_router, prefix=f"{settings.api_v1_prefix}/report", tags=["Reports"])
+
+    # Document Intelligence (protected)
+    from app.document_intelligence.router import (
+        router as document_intelligence_router,
+    )
+    app.include_router(
+        document_intelligence_router,
+        prefix=f"{settings.api_v1_prefix}",
+        tags=["Document Intelligence"],
+    )
+# ---------------------------------------------------------
+# FastAPI Application Instance
+# ---------------------------------------------------------
+app = create_app()
+    
+    

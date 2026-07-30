@@ -63,21 +63,21 @@ class TestConversationRepository:
 
 class TestAIAgentService:
     @pytest.mark.asyncio
-    @patch("app.ai_agent.service.get_agent_executor")
-    async def test_start_conversation(self, mock_get_executor):
+    @patch("app.ai_agent.service.Orchestrator.execute")
+    async def test_start_conversation(self, mock_execute):
+        from app.ai_agent.core.agent_result import AgentResult
         # Setup mock executor
-        mock_executor = AsyncMock()
         mock_ai_message = MagicMock()
         mock_ai_message.content = "Hello from AI"
-        mock_executor.ainvoke.return_value = {"messages": [mock_ai_message]}
-        mock_get_executor.return_value = mock_executor
+        mock_execute.return_value = AgentResult(success=True, payload={"messages": [mock_ai_message]})
         
         # Setup mock repo
         mock_repo = AsyncMock()
         mock_conv = Conversation(id=MOCK_CONV_ID, messages=[])
         mock_repo.create.return_value = mock_conv
+        mock_case_repo = AsyncMock()
         
-        service = AIAgentService(mock_repo)
+        service = AIAgentService(mock_repo, mock_case_repo)
         
         with patch("app.ai_agent.service.messages_to_dict", return_value=[]):
             result = await service.start_conversation(MOCK_USER_ID, "Initial message")
@@ -87,26 +87,27 @@ class TestAIAgentService:
         assert result["is_complete"] is False
 
     @pytest.mark.asyncio
-    @patch("app.ai_agent.service.get_agent_executor")
-    async def test_workflow_complete_marker(self, mock_get_executor):
-        mock_executor = AsyncMock()
+    @patch("app.ai_agent.service.Orchestrator.execute")
+    async def test_workflow_complete_marker(self, mock_execute):
+        from app.ai_agent.core.agent_result import AgentResult
         mock_ai_message = MagicMock()
-        mock_ai_message.content = "Here is your roadmap. [WORKFLOW_COMPLETE]"
-        mock_executor.ainvoke.return_value = {"messages": [mock_ai_message]}
-        mock_get_executor.return_value = mock_executor
+        mock_ai_message.content = "Here is your roadmap."
+        mock_execute.return_value = AgentResult(success=True, payload={"messages": [mock_ai_message]})
         
         mock_repo = AsyncMock()
-        mock_conv = Conversation(id=MOCK_CONV_ID, messages=[], agent_state={})
+        mock_conv = Conversation(id=MOCK_CONV_ID, messages=[], agent_state={}, is_complete=True)
         mock_repo.get_by_id.return_value = mock_conv
+        mock_case_repo = AsyncMock()
         
-        service = AIAgentService(mock_repo)
+        service = AIAgentService(mock_repo, mock_case_repo)
         
         with patch("app.ai_agent.service.messages_to_dict", return_value=[]), \
              patch("app.ai_agent.service.messages_from_dict", return_value=[]):
+            # Because it's complete, it raises ValueError, but let's change mock_conv.is_complete to False
+            mock_conv.is_complete = False
             result = await service.send_message(MOCK_CONV_ID, MOCK_USER_ID, "Follow up")
             
-        assert result["is_complete"] is True
-        assert "[WORKFLOW_COMPLETE]" not in result["reply"]
+        # The service doesn't parse WORKFLOW_COMPLETE anymore
         assert result["reply"] == "Here is your roadmap."
 
     @pytest.mark.asyncio
@@ -116,7 +117,8 @@ class TestAIAgentService:
         mock_repo.get_by_id.return_value = mock_conv
         
         # we can pass None for get_agent_executor because it shouldn't be called
-        with patch("app.ai_agent.service.get_agent_executor"):
-            service = AIAgentService(mock_repo)
-            with pytest.raises(ValueError, match="Conversation is already complete"):
+        with patch("app.ai_agent.service.Orchestrator.execute"):
+            mock_case_repo = AsyncMock()
+            service = AIAgentService(mock_repo, mock_case_repo)
+            with pytest.raises(ValueError, match="This conversation has been closed by the user."):
                 await service.send_message(MOCK_CONV_ID, MOCK_USER_ID, "hello")

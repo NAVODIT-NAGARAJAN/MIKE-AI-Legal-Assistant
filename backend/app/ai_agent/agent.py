@@ -90,7 +90,7 @@ def get_agent_executor(prompt=SYSTEM_PROMPT):
     agent_executor = create_react_agent(
         model=llm,
         tools=tools,
-        prompt=SYSTEM_PROMPT,
+        prompt=prompt,
     )
 
     log.info("LangGraph Agent Created Successfully.")

@@ -24,15 +24,13 @@ def _auth(token: str) -> dict:
 
 class TestAgentAPI:
     @pytest.mark.asyncio
-    @patch("app.ai_agent.service.get_agent_executor")
-    async def test_start_conversation(self, mock_get_executor, app_client: AsyncClient):
+    @patch("app.ai_agent.service.Orchestrator.execute")
+    async def test_start_conversation(self, mock_execute, app_client: AsyncClient):
         # Mock executor
-        from unittest.mock import AsyncMock
-        mock_executor = AsyncMock()
+        from app.ai_agent.core.agent_result import AgentResult
         mock_msg = MagicMock()
         mock_msg.content = "How can I help you today?"
-        mock_executor.ainvoke.return_value = {"messages": [mock_msg]}
-        mock_get_executor.return_value = mock_executor
+        mock_execute.return_value = AgentResult(success=True, payload={"messages": [mock_msg]})
         
         token = await _register_and_login(app_client, "agent1@example.com")
         
@@ -50,15 +48,13 @@ class TestAgentAPI:
         assert data["is_complete"] is False
 
     @pytest.mark.asyncio
-    @patch("app.ai_agent.service.get_agent_executor")
-    async def test_send_message_and_get_conversation(self, mock_get_executor, app_client: AsyncClient):
+    @patch("app.ai_agent.service.Orchestrator.execute")
+    async def test_send_message_and_get_conversation(self, mock_execute, app_client: AsyncClient):
         # Mock executor setup
-        from unittest.mock import AsyncMock
-        mock_executor = AsyncMock()
+        from app.ai_agent.core.agent_result import AgentResult
         mock_msg = MagicMock()
         mock_msg.content = "I understand. Do you have the invoice?"
-        mock_executor.ainvoke.return_value = {"messages": [mock_msg]}
-        mock_get_executor.return_value = mock_executor
+        mock_execute.return_value = AgentResult(success=True, payload={"messages": [mock_msg]})
         
         token = await _register_and_login(app_client, "agent2@example.com")
         

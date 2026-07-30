@@ -58,12 +58,11 @@ class TestReportAPI:
         # or we just create a conversation via API and patch the is_complete flag in DB.
         # It's easier to use the API, then manually run a query to update it for test.
         # But since we are testing endpoints, let's create a conversation.
-        with patch("app.ai_agent.service.get_agent_executor") as mock_get_executor:
-            mock_executor = AsyncMock()
+        with patch("app.ai_agent.service.Orchestrator.execute") as mock_execute:
+            from app.ai_agent.core.agent_result import AgentResult
             mock_msg = MagicMock()
-            mock_msg.content = "Roadmap. [WORKFLOW_COMPLETE]"
-            mock_executor.ainvoke.return_value = {"messages": [mock_msg]}
-            mock_get_executor.return_value = mock_executor
+            mock_msg.content = "Roadmap."
+            mock_execute.return_value = AgentResult(success=True, payload={"messages": [mock_msg]})
             
             with patch("app.ai_agent.service.messages_to_dict", return_value=[]):
                 resp_conv = await app_client.post(
@@ -74,10 +73,22 @@ class TestReportAPI:
         conv_id = resp_conv.json()["data"]["conversation_id"]
         
         # 4. Generate Report
-        resp_gen = await app_client.post(
-            f"/api/v1/report/generate/{conv_id}",
-            headers=_auth(token)
-        )
+        # Since the API to close a conversation is not yet built, we mock the repository
+        # to return a conversation that is marked as complete for the report generation to succeed.
+        original_get_by_id = app.ai_agent.repository.ConversationRepository.get_by_id
+        
+        async def mock_get_by_id(self, conv_id, user_id):
+            conv = await original_get_by_id(self, conv_id, user_id)
+            if conv:
+                conv.is_complete = True
+            return conv
+
+        import app.ai_agent.repository
+        with patch.object(app.ai_agent.repository.ConversationRepository, "get_by_id", new=mock_get_by_id):
+            resp_gen = await app_client.post(
+                f"/api/v1/report/generate/{conv_id}",
+                headers=_auth(token)
+            )
         assert resp_gen.status_code == 201
         data = resp_gen.json()["data"]
         assert data["case_id"] == case_id

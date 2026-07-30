@@ -19,6 +19,8 @@ class AgentRole(str, Enum):
     LEGAL_RESEARCH = "legal_research"
     DOCUMENT_INTELLIGENCE = "document_intelligence"
     LEGAL_DRAFTING = "legal_drafting"
+    COMPLAINT_DRAFTING = "complaint_drafting"
     LEGAL_ADVISOR = "legal_advisor"
     WEB_SEARCH = "web_search"
     VERIFICATION = "verification"
+    DOCUMENT_ANALYSIS = "document_analysis"

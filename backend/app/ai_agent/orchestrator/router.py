@@ -18,6 +18,72 @@ class OrchestratorRouter:
     """
 
     # ---------------------------------------------------------
+    # Keywords for Complaint Drafting
+    # Highest Priority
+    # ---------------------------------------------------------
+    COMPLAINT_DRAFTING_KEYWORDS = [
+        "draft complaint",
+        "draft a complaint",
+        "generate complaint",
+        "create complaint",
+        "write complaint",
+        "prepare complaint",
+        "prepare a complaint",
+        "complaint letter",
+        "consumer complaint",
+        "modify complaint",
+        "edit complaint",
+        "rewrite complaint",
+        "redraft complaint",
+        "legal notice",
+        "generate legal notice",
+    ]
+
+    # ---------------------------------------------------------
+    # Keywords for Document Analysis
+    # ---------------------------------------------------------
+    DOCUMENT_ANALYSIS_KEYWORDS = [
+        "document analysis",
+        "analyze document",
+        "analyse document",
+        "analyze receipt",
+        "analyse receipt",
+        "receipt",
+        "invoice",
+        "bill",
+        "purchase bill",
+        "purchase receipt",
+        "warranty card",
+        "order confirmation",
+        "product invoice",
+        "upload receipt",
+        "upload invoice",
+        "uploaded receipt",
+        "uploaded invoice",
+        "uploaded document",
+        "extract document",
+        "extract information",
+        "document summary",
+        "summarize document",
+    ]
+
+    # ---------------------------------------------------------
+    # Keywords for Case Analysis
+    # ---------------------------------------------------------
+    CASE_ANALYSIS_KEYWORDS = [
+        "complaint analysis",
+        "analyze complaint",
+        "analyse complaint",
+        "analyze my complaint",
+        "analyse my complaint",
+        "review complaint",
+        "review my complaint",
+        "ocr",
+        "pdf",
+        "case preparation",
+    ]
+
+    # ---------------------------------------------------------
     # Keywords for Legal Research
     # ---------------------------------------------------------
     LEGAL_RESEARCH_KEYWORDS = [
@@ -66,7 +132,7 @@ class OrchestratorRouter:
         "unfair trade practice",
         "product liability",
 
-        # Common Questions
+        # General Legal Questions
         "explain",
         "what is",
         "rights",
@@ -74,36 +140,7 @@ class OrchestratorRouter:
         "act",
         "section",
         "rule",
-        "procedure"
-    ]
-
-    # ---------------------------------------------------------
-    # Keywords for Case Analysis
-    # ---------------------------------------------------------
-    CASE_ANALYSIS_KEYWORDS = [
-        "draft complaint",
-        "draft a complaint",
-        "generate complaint",
-        "complaint generation",
-        "write complaint",
-        "create complaint",
-        "modify complaint",
-        "edit complaint",
-        "complaint modification",
-        "complaint analysis",
-        "analyze complaint",
-        "analyse complaint",
-        "review complaint",
-        "legal notice",
-        "generate legal notice",
-        "document analysis",
-        "analyze document",
-        "analyse document",
-        "uploaded complaint",
-        "uploaded document",
-        "ocr",
-        "pdf",
-        "case preparation"
+        "procedure",
     ]
 
     def __init__(self) -> None:
@@ -116,7 +153,7 @@ class OrchestratorRouter:
     ) -> Optional[AgentRole]:
         """
         Determine which specialized agent should process
-        the current request.
+        the current user request.
 
         Args:
             context: Current conversation context.
@@ -128,11 +165,32 @@ class OrchestratorRouter:
         user_input = context.user_input.lower().strip()
 
         # -----------------------------------------------------
-        # Case Analysis has higher priority
+        # Complaint Drafting
         # -----------------------------------------------------
-        # Example:
-        # "Draft a complaint explaining consumer rights"
-        # should go to CaseAnalysisAgent.
+        for keyword in self.COMPLAINT_DRAFTING_KEYWORDS:
+            if keyword in user_input:
+                return AgentRole.COMPLAINT_DRAFTING
+
+        # -----------------------------------------------------
+        # Document Intelligence (Upload Requests)
+        # -----------------------------------------------------
+        if (
+            "upload" in user_input
+            or "shall i upload" in user_input
+            or "should i upload" in user_input
+            or "can i upload" in user_input
+        ):
+            return AgentRole.DOCUMENT_INTELLIGENCE
+        
+        # -----------------------------------------------------
+        # Document Analysis
+        # -----------------------------------------------------
+        for keyword in self.DOCUMENT_ANALYSIS_KEYWORDS:
+            if keyword in user_input:
+                return AgentRole.DOCUMENT_ANALYSIS
+
+        # -----------------------------------------------------
+        # Case Analysis
         # -----------------------------------------------------
         for keyword in self.CASE_ANALYSIS_KEYWORDS:
             if keyword in user_input:
@@ -146,6 +204,6 @@ class OrchestratorRouter:
                 return AgentRole.LEGAL_RESEARCH
 
         # -----------------------------------------------------
-        # Default fallback
+        # Default Agent
         # -----------------------------------------------------
         return AgentRole.CASE_ANALYSIS

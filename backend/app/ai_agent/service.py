@@ -190,24 +190,29 @@ Do not ask the user to explain the complaint again unless additional information
             agent_result = await self.orchestrator.execute(context)
 
             if not agent_result.success or agent_result.payload is None:
+                print("\n========== AGENT DEBUG ==========")
+                print("Success :", agent_result.success)
+                print("Payload :", agent_result.payload)
+                print("Error   :", agent_result.error)
+                print("Metadata:", agent_result.metadata)
+                print("=================================\n")
+
                 raise RuntimeError(
-                    "AI Agent failed to process message."
-                ) from (
-                    agent_result.error
-                    if agent_result.error
-                    else None
+                    f"AI Agent failed to process message.\n"
+                    f"Error: {agent_result.error}\n"
+                    f"Metadata: {agent_result.metadata}"
                 )
 
             result = agent_result.payload
 
             log.info("Gemini responded successfully.")
 
-        except Exception as exc:
-            log.exception("Agent execution failed")
-            raise RuntimeError(
-                "AI Agent failed to process message."
-            ) from exc
+        except Exception:
+            import traceback
 
+            traceback.print_exc()
+
+            raise
         new_lc_messages = result["messages"]
         ai_msg = new_lc_messages[-1]
         reply_content = ai_msg.content

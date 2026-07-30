@@ -1,10 +1,20 @@
+import asyncio
+from langchain_google_genai import ChatGoogleGenerativeAI
 from app.config.settings import settings
-from google import genai
 
-client = genai.Client(api_key=settings.gemini_api_key)
 
-print("Connected successfully!")
-print("Available models:\n")
+async def main():
+    llm = ChatGoogleGenerativeAI(
+        model=settings.gemini_model,
+        google_api_key=settings.gemini_api_key,
+    )
 
-for model in client.models.list():
-    print(model.name)
+    print("Sending request...")
+
+    response = await llm.ainvoke("What are consumer rights in India?")
+
+    print("Response:")
+    print(response.content)
+
+
+asyncio.run(main())

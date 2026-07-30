@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import Dict, Any, List, Optional
+from pathlib import Path
 
 @dataclass
 class AgentContext:
@@ -36,3 +37,22 @@ class AgentContext:
     # Populated by: Agents during execution to pass extracted facts or intermediate 
     # reasoning down the pipeline (e.g., extracted product name, identified legal violations).
     shared_memory: Dict[str, Any] = field(default_factory=dict)
+
+    # ------------------------------------------------------------------
+    # Document Intelligence Context
+    # ------------------------------------------------------------------
+
+    # Uploaded file path (temporary file on server)
+    uploaded_file: Optional[Path] = None
+
+    # Original uploaded filename
+    uploaded_filename: Optional[str] = None
+
+    # MIME type
+    uploaded_mime_type: Optional[str] = None
+
+    # Text extracted from PDF/OCR/DOCX
+    document_text: Optional[str] = None
+
+    # Parsed document object (optional)
+    parsed_document: Optional[Any] = None
