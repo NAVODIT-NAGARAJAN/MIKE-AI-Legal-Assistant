@@ -208,3 +208,24 @@ async def get_conversation(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(exc),
         )
+@router.delete(
+    "/conversations/{conversation_id}",
+    response_model=SuccessResponse[None],
+    status_code=status.HTTP_200_OK,
+    summary="Delete conversation",
+)
+async def delete_conversation(
+    conversation_id: uuid.UUID,
+    current_user: User = Depends(get_current_active_user),
+    service: AIAgentService = Depends(get_agent_service),
+) -> SuccessResponse[None]:
+
+    await service.delete_conversation(
+        conversation_id=conversation_id,
+        user_id=current_user.id,
+    )
+
+    return SuccessResponse(
+        message="Conversation deleted successfully.",
+        data=None,
+    )

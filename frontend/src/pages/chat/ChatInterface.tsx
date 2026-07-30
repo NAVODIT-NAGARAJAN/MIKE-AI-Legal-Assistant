@@ -158,15 +158,32 @@ export const ChatInterface: React.FC = () => {
     }
   };
 
-  const handleDeleteChat = () => {
-    if (!chatToDelete) return;
-    setRecentChats(prev => prev.filter(c => c.id !== chatToDelete));
+  const handleDeleteChat = async () => {
+  if (!chatToDelete) return;
+
+  try {
+    // Delete from backend
+    await apiService.deleteConversation(chatToDelete);
+
+    // Remove from sidebar
+    setRecentChats(prev =>
+      prev.filter(c => c.id !== chatToDelete)
+    );
+
     toast.success("Conversation deleted.");
+
+    // If currently viewing this conversation,
+    // navigate back to a new chat
     if (conversationId === chatToDelete) {
       navigate("/chat");
     }
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to delete conversation.");
+  } finally {
     setChatToDelete(null);
-  };
+  }
+};
 
   const handleRenameSubmit = (id: string) => {
     if (!renameValue.trim()) {

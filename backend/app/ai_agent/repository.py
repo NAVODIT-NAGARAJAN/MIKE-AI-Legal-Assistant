@@ -85,3 +85,21 @@ class ConversationRepository:
         await self.db.refresh(conv)
 
         return conv
+
+    async def delete_conversation(
+        self,
+        conversation_id: uuid.UUID,
+        user_id: uuid.UUID,
+    ) -> None:
+        """Delete a conversation belonging to the specified user."""
+
+        conv = await self.get_by_id(
+            conversation_id=conversation_id,
+            user_id=user_id,
+        )
+
+        if not conv:
+            raise ValueError("Conversation not found or access denied.")
+
+        await self.db.delete(conv)
+        await self.db.commit()

@@ -95,6 +95,19 @@ class AIAgentService:
         """
         return await self.repo.list_by_user(user_id)
 
+    async def delete_conversation(
+        self,   
+        conversation_id: uuid.UUID,
+        user_id: uuid.UUID,
+    ) -> None:
+        """
+        Delete a conversation belonging to the current user.
+        """
+        await self.repo.delete_conversation(
+            conversation_id=conversation_id,
+            user_id=user_id,
+        )
+
     async def _process_turn(
         self,
         conv: Conversation,

@@ -69,11 +69,19 @@ export const aiApi = {
     return response.data.data;
   },
 
-  listConversations: async (): Promise<ConversationListItem[]> => {
-    const response = await api.get(
-      "/api/v1/agent/conversations"
-    );
+ listConversations: async (): Promise<ConversationListItem[]> => {
+  const response = await api.get(
+    "/api/v1/agent/conversations"
+  );
 
-    return response.data.data;
-  },
+  return response.data.data;
+},
+
+deleteConversation: async (
+  conversationId: string
+): Promise<void> => {
+  await api.delete(
+    `/api/v1/agent/conversations/${conversationId}`
+  );
+},
 };
